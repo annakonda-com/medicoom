@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Medicoom</string>
+    <string name="email">email</string>
+    <string name="greeting">Добро пожаловать в Медикум!</string>
+    <string name="password">пароль</string>
+    <string name="no_acc_quest">Ещё нет аккаунта?</string>
+    <string name="reg_then"><u>Зарегистрируйтесь</u></string>
+    <string name="login">Войти</string>
+    <string name="go_without_reg"><u>Продолжить без регистрации</u></string>
+    <string name="registration">Регистрация</string>
+    <string name="name_surname">Имя Фамилия</string>
+    <string name="repeat_pass">повторите пароль</string>
+    <string name="reg">Зарегистрироваться</string>
+</resources>
