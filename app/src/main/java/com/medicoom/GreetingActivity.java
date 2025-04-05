@@ -3,6 +3,8 @@ package com.medicoom;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +25,40 @@ import com.google.firebase.auth.FirebaseUser;
 public class GreetingActivity extends AppCompatActivity {
     LinearLayout to_reg;
     TextView no_reg;
-
+    private boolean validateForm() {
+        boolean valid = true;
+        EditText email = findViewById(R.id.email);
+        EditText password = findViewById(R.id.password);
+        if (email.getText() == null) {
+            email.setError("Обязательное поле");
+            valid = false;
+        } else {
+            email.setError(null);
+        }
+        if (password.getText() == null) {
+            password.setError("Обязательное поле");
+            valid = false;
+        } else {
+            password.setError(null);
+        }
+        return valid;
+    }
+    private  void logIn(String email, String password){
+        FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        nAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(GreetingActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(GreetingActivity.this, "Что-то пошло не так",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +99,17 @@ public class GreetingActivity extends AppCompatActivity {
                                 }
                             }
                         });
+            }
+        });
+        Button login = findViewById(R.id.login);    // Войти
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText email = findViewById(R.id.email);
+                EditText password = findViewById(R.id.password);
+                if (validateForm()){
+                    logIn(email.getText().toString(), password.getText().toString());
+                }
             }
         });
     }
