@@ -11,4 +11,8 @@
     <string name="name_surname">Имя Фамилия</string>
     <string name="repeat_pass">повторите пароль</string>
     <string name="reg">Зарегистрироваться</string>
+    <string name="mail_sended">Вам на почту было отправлено письмо для подтверждения аккаунта.</string>
+    <string name="please_verify">Пожалуйста, перейдите по ссылке и подтвердите аккаунт</string>
+    <string name="avtorize">Авторизоваться</string>
+    <string name="today">Сегодня</string>
 </resources>

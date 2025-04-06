@@ -18,6 +18,10 @@
         android:theme="@style/Base.Theme.Medicoom"
         tools:targetApi="35">
         <activity
+            android:name=".WaitVerifideActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".RegistrationActivity"
             android:exported="true" />
         <activity

@@ -2,6 +2,7 @@ package com.medicoom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -55,7 +57,7 @@ public class RegistrationActivity extends AppCompatActivity {
         } else {
             nameSurname.setError(null);
         }
-        if (!password1.equals(password2)) {
+        if (!password1.getText().toString().equals(password2.getText().toString())) {
             password1.setError("Пароли должны совпадать!");
             password2.setError("Пароли должны совпадать!");
             valid = false;
@@ -72,10 +74,26 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                    mDatabase.child("users").child(nAuth.getUid()).child("name").setValue(name);
-                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    nAuth.getCurrentUser().sendEmailVerification()
+                            .addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("MY_TAG", "Письмо отправлено");
+                                        DatabaseReference mDatabase = FirebaseDatabase
+                                                .getInstance("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
+                                                .getReference("users");
+                                        mDatabase.child(nAuth.getCurrentUser().getUid()).child("name").setValue(name);
+                                        Intent intent = new Intent(RegistrationActivity.this, WaitVerifideActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        Log.e("MY_TAG", task.getException().getMessage().toString());
+                                        Toast.makeText(RegistrationActivity.this,
+                                                "Failed to send verification email.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 } else {
                     if (task.getException().getMessage() != null) {
                         Toast.makeText(RegistrationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

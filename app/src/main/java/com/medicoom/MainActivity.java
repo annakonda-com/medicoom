@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
             });
+            getSupportActionBar().setTitle(R.string.today);
             Button btn = findViewById(R.id.button);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
