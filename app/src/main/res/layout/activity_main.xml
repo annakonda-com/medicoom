@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:id="@+id/main">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md_theme_primary"
+        android:gravity="top"
+        app:title="@string/today"
+        app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        app:titleTextColor="@color/md_theme_onPrimary" />
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_toolbar" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выйти из аккаунта"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="161dp" />
+        android:text="@string/exit"
+        android:layout_below="@+id/my_toolbar" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/md_theme_surfaceContainerLowest"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:itemIconTint="@color/md_theme_secondary"
+        app:itemTextColor="@color/md_theme_secondary"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu" />
+
 </RelativeLayout>

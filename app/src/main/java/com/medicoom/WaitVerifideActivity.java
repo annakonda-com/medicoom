@@ -33,9 +33,6 @@ public class WaitVerifideActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         Button btn = findViewById(R.id.wait_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +41,5 @@ public class WaitVerifideActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

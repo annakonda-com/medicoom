@@ -15,4 +15,8 @@
     <string name="please_verify">Пожалуйста, перейдите по ссылке и подтвердите аккаунт</string>
     <string name="avtorize">Авторизоваться</string>
     <string name="today">Сегодня</string>
+    <string name="exit">Выйти из аккаунта</string>
+    <string name="settings">Настройки</string>
+    <string name="farmacy">Аптечка</string>
+
 </resources>

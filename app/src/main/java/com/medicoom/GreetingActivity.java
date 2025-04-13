@@ -21,31 +21,40 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.medicoom.utils.myUtils;
 
 public class GreetingActivity extends AppCompatActivity {
-    LinearLayout to_reg;
-    TextView no_reg;
+
     private boolean validateForm() {
         boolean valid = true;
         EditText email = findViewById(R.id.email);
         EditText password = findViewById(R.id.password);
-        if (email.getText() == null) {
+        if (email.getText().toString().isEmpty()) {
             email.setError("Обязательное поле");
             valid = false;
         } else {
-            email.setError(null);
+            if (myUtils.isSpace(email.getText().toString())) {
+                email.setError("Поле пустое");
+                valid = false;
+            } else {
+                email.setError(null);
+            }
         }
-        if (password.getText() == null) {
+        if (password.getText().toString().isEmpty()) {
             password.setError("Обязательное поле");
             valid = false;
         } else {
-            password.setError(null);
+            if (myUtils.isSpace(password.getText().toString())) {
+                password.setError("Поле пустое");
+                valid = false;
+            } else {
+                password.setError(null);
+            }
         }
         return valid;
     }
-    private  void logIn(String email, String password){
+
+    private void logIn(String email, String password) {
         FirebaseAuth nAuth = FirebaseAuth.getInstance();
         nAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -53,24 +62,30 @@ public class GreetingActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = nAuth.getCurrentUser();
-                            if (user.isEmailVerified()){
+                            if (user.isEmailVerified()) {
                                 Intent intent = new Intent(GreetingActivity.this, MainActivity.class);
                                 startActivity(intent);
-                            }else{
+                                finish();
+                            } else {
                                 Toast.makeText(GreetingActivity.this, "Почта не подтверждена!",
                                         Toast.LENGTH_SHORT).show();
                                 nAuth.signOut();
                             }
-
                         } else {
-                            Toast.makeText(GreetingActivity.this, "Что-то пошло не так",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.getException().getMessage() != null) {
+                                Toast.makeText(GreetingActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(GreetingActivity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LinearLayout to_reg;
+        TextView no_reg;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_greeting);
@@ -79,9 +94,6 @@ public class GreetingActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         to_reg = findViewById(R.id.to_reg_layout); // Зарегистрироваться
         to_reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +115,7 @@ public class GreetingActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Intent intent = new Intent(GreetingActivity.this, MainActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     Toast.makeText(GreetingActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
@@ -117,8 +130,8 @@ public class GreetingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText email = findViewById(R.id.email);
                 EditText password = findViewById(R.id.password);
-                if (validateForm()){
-                    logIn(email.getText().toString(), password.getText().toString());
+                    if (validateForm()) {
+                        logIn(email.getText().toString(), password.getText().toString());
                 }
             }
         });

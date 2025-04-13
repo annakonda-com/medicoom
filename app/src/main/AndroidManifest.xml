@@ -19,8 +19,7 @@
         tools:targetApi="35">
         <activity
             android:name=".WaitVerifideActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".RegistrationActivity"
             android:exported="true" />

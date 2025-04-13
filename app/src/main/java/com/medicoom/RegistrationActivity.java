@@ -19,11 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Objects;
+import com.medicoom.utils.myUtils;
 
 public class RegistrationActivity extends AppCompatActivity {
     private boolean validateForm() {
@@ -33,29 +31,49 @@ public class RegistrationActivity extends AppCompatActivity {
         email = findViewById(R.id.registration_email);
         password1 = findViewById(R.id.reg_password);
         password2 = findViewById(R.id.reg_password1);
-        if (email.getText() == null) {
+        if (email.getText().toString().isEmpty()) {
             email.setError("Обязательное поле");
             valid = false;
         } else {
-            email.setError(null);
+            if (myUtils.isSpace(email.getText().toString())) {
+                email.setError("Поле пустое");
+                valid = false;
+            }else{
+                email.setError(null);
+            }
         }
-        if (password1.getText() == null) {
+        if (password1.getText().toString().isEmpty()) {
             password1.setError("Обязательное поле");
             valid = false;
         } else {
-            password1.setError(null);
+            if (myUtils.isSpace(password1.getText().toString())) {
+                password1.setError("Поле пустое");
+                valid = false;
+            }else{
+                password1.setError(null);
+            }
         }
-        if (password2.getText() == null) {
+        if (password2.getText().toString().isEmpty()) {
             password2.setError("Обязательное поле");
             valid = false;
         } else {
-            password1.setError(null);
+            if (myUtils.isSpace(password2.getText().toString())) {
+                password2.setError("Поле пустое");
+                valid = false;
+            }else{
+                password2.setError(null);
+            }
         }
-        if (nameSurname.getText() == null) {
+        if (nameSurname.getText().toString().isEmpty()) {
             nameSurname.setError("Обязательное поле");
             valid = false;
         } else {
-            nameSurname.setError(null);
+            if (myUtils.isSpace(nameSurname.getText().toString())) {
+                nameSurname.setError("Поле пустое");
+                valid = false;
+            }else{
+                nameSurname.setError(null);
+            }
         }
         if (!password1.getText().toString().equals(password2.getText().toString())) {
             password1.setError("Пароли должны совпадать!");
@@ -84,8 +102,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                                 .getInstance("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                                                 .getReference("users");
                                         mDatabase.child(nAuth.getCurrentUser().getUid()).child("name").setValue(name);
+                                        FirebaseAuth.getInstance().signOut();
                                         Intent intent = new Intent(RegistrationActivity.this, WaitVerifideActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     } else {
                                         Log.e("MY_TAG", task.getException().getMessage().toString());
                                         Toast.makeText(RegistrationActivity.this,
@@ -116,9 +136,6 @@ public class RegistrationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         Button btn = findViewById(R.id.registration);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
