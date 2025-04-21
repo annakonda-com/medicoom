@@ -18,5 +18,19 @@
     <string name="exit">Выйти из аккаунта</string>
     <string name="settings">Настройки</string>
     <string name="farmacy">Аптечка</string>
+    <string name="treatment">Лечение</string>
+    <string name="history">история</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Название</string>
+    <string name="dosage">Дозировка</string>
+    <string name="num_of_tablets">Количество таблеток/порций</string>
+    <string name="good_until">Препарат годен до</string>
+    <string name="remind_me_when">Напомнить \nкогда останется</string>
+    <string name="tablets_or_portions">таблеток или порций</string>
+    <string name="save">Сохранить</string>
+    <string name="you_want_med">Вы точно хотите удалить лекарство?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="med_delete">Удаление лекарства</string>
 
 </resources>
