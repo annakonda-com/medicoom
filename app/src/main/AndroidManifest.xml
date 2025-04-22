@@ -24,9 +24,6 @@
             android:name=".TreatmentActivity"
             android:exported="false" />
         <activity
-            android:name=".FarmacyActivity"
-            android:exported="false" />
-        <activity
             android:name=".WaitVerifideActivity"
             android:exported="true" />
         <activity

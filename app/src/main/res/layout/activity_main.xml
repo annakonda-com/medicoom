@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_inverseOnSurface">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         style="@style/toolbar"
         app:menu="@menu/toolbar"
-        app:title="@string/today"/>
+        app:title="@string/today" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exit"
-        android:layout_below="@id/my_toolbar"/>
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/my_toolbar"/>
 
     <include layout="@layout/my_bottom_bar" />
 </RelativeLayout>

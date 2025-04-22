@@ -46,11 +46,17 @@ public class InputMedicineFragment extends Fragment {
         // Required empty public constructor
     }
     private void selfKill(){
-        RelativeLayout body = getActivity().findViewById(R.id.body);
-        body.setVisibility(View.VISIBLE);
+        BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
+        bottomBar.setVisibility(View.VISIBLE);
+
+        Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
+        tlbt.setVisibility(View.VISIBLE);
+
+        FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
+        nftb.setVisibility(View.VISIBLE);
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.remove(InputMedicineFragment.this);
+        ft.replace(R.id.fragment_container, new FarmacyFragment());
         ft.commit();
     }
 
