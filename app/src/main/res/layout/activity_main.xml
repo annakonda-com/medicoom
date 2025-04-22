@@ -4,7 +4,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_inverseOnSurface">
+    android:background="@color/md_theme_inverseOnSurface"
+    android:animateLayoutChanges="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"

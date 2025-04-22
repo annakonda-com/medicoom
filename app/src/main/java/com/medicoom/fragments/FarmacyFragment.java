@@ -46,19 +46,19 @@ public class FarmacyFragment extends Fragment {
 
     private void prepareSpace(){
         BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
-        bottomBar.animate().alpha(0.0f);
+        //bottomBar.animate().alpha(0.0f);
         bottomBar.setVisibility(View.GONE);
 
         Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
-        tlbt.animate().alpha(0.0f);
+        //tlbt.animate().alpha(0.0f);
         tlbt.setVisibility(View.GONE);
 
         FloatingActionButton ftb = getActivity().findViewById(R.id.add_medicine);
-        ftb.animate().alpha(0.0f);
+        //ftb.animate().alpha(0.0f);
         ftb.setVisibility(View.GONE);
 
         FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
-        nftb.animate().alpha(0.0f);
+        //nftb.animate().alpha(0.0f);
         nftb.setVisibility(View.GONE);
     }
 

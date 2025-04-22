@@ -48,15 +48,15 @@ public class InputMedicineFragment extends Fragment {
 
     public void selfKill() {
         BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
-        bottomBar.animate().alpha(1.0f);
+        //bottomBar.animate().alpha(1.0f);
         bottomBar.setVisibility(View.VISIBLE);
 
         Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
-        tlbt.animate().alpha(1.0f);
+        //tlbt.animate().alpha(1.0f);
         tlbt.setVisibility(View.VISIBLE);
 
         FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
-        nftb.animate().alpha(1.0f);
+        //nftb.animate().alpha(1.0f);
         nftb.setVisibility(View.VISIBLE);
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
