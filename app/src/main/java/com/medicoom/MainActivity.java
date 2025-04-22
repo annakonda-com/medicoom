@@ -19,16 +19,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.medicoom.fragments.FarmacyFragment;
 import com.medicoom.fragments.HistoryFragment;
+import com.medicoom.fragments.InputMedicineFragment;
 import com.medicoom.fragments.MainFragment;
 import com.medicoom.fragments.TreatmentFragment;
 
 
 public class MainActivity extends AppCompatActivity {
     public FirebaseAuth auth;
+    final String MAIN_FRAGMENT = "main_fragment";
 
-    private void setFragment(Fragment fr){
+    private void setMainFragments(Fragment fr){
          FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-         ft.replace(R.id.fragment_container, fr);
+         ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
          ft.addToBackStack("name");
          ft.commit();
      }
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle(R.string.today);
                 }
                 MainFragment fr = new MainFragment();
-                setFragment(fr);
+                setMainFragments(fr);
             }
         });
         findViewById(R.id.menuFarmacy).setOnClickListener(new View.OnClickListener() {
@@ -50,21 +52,21 @@ public class MainActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle(R.string.farmacy);
                 }
                 FarmacyFragment fr = new FarmacyFragment();
-                setFragment(fr);
+                setMainFragments(fr);
             }
         });
         findViewById(R.id.menuTreatment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TreatmentFragment fr = new TreatmentFragment();
-                setFragment(fr);
+                setMainFragments(fr);
             }
         });
         findViewById(R.id.menuHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HistoryFragment fr = new HistoryFragment();
-                setFragment(fr);
+                setMainFragments(fr);
             }
         });
     }
@@ -90,12 +92,25 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.today);
             }
             MainFragment fr = new MainFragment();
-            setFragment(fr);
+            setMainFragments(fr);
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
-                    //TODO: сделать чтобы с главных фрагментов попадать на экран сегодня
-                        getSupportFragmentManager().popBackStack();
+                    if (getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                            instanceof InputMedicineFragment){
+                        InputMedicineFragment fr = (InputMedicineFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                        fr.selfKill();
+                    }else if (getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                            instanceof MainFragment){
+                        finish();
+                    }else if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT) != null){
+                        if (getSupportActionBar() != null) {
+                            getSupportActionBar().setTitle(R.string.today);
+                        }
+                        MainFragment fr = new MainFragment();
+                        setMainFragments(fr);
+                    }
+
                 }
             };
             Toolbar tlbar = findViewById(R.id.my_toolbar);

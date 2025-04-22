@@ -64,7 +64,6 @@ public class FarmacyFragment extends Fragment {
 
                 //RelativeLayout body = findViewById(R.id.body);
                 //body.setVisibility(View.GONE);
-                // TODO: Изменить создание нового фрагмента на использование старого
                 InputMedicineFragment inpfr = new InputMedicineFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_container, inpfr);

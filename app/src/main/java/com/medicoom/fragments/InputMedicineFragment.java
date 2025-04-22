@@ -45,7 +45,8 @@ public class InputMedicineFragment extends Fragment {
     public InputMedicineFragment() {
         // Required empty public constructor
     }
-    private void selfKill(){
+
+    public void selfKill() {
         BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
         bottomBar.setVisibility(View.VISIBLE);
 
@@ -88,7 +89,7 @@ public class InputMedicineFragment extends Fragment {
                             dosage.getText().toString(), int_num_of_tablets,
                             startDate, int_remind_when);
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance
-                            ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
+                                    ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                             .getReference("users");
                     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     mDatabase.child(currentUser.getUid()).child("medicines").push()
@@ -136,6 +137,7 @@ public class InputMedicineFragment extends Fragment {
                 num_of_tablets.setError(null);
             } catch (NumberFormatException e) {
                 num_of_tablets.setError("Введите число!");
+                valid = false;
             }
         }
         if (!remind_when.getText().toString().isEmpty() && !myUtils.isSpace(remind_when.getText().toString())) {

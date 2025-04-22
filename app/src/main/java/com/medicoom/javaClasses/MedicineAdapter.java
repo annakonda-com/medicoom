@@ -43,6 +43,11 @@ public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
         ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets)).setVisibility(View.GONE);
         ((TextView) convertView.findViewById(R.id.medicine_good_until)).setVisibility(View.GONE);
 
+        ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets))
+                .setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant));
+        ((TextView) convertView.findViewById(R.id.medicine_good_until))
+                .setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_onSurfaceVariant));
+
         ((TextView) convertView.findViewById(R.id.medicine_name)).setText(med.name);
         if (!med.dosage.isEmpty()) {
             ((TextView) convertView.findViewById(R.id.medicine_dosage)).setVisibility(View.VISIBLE);
