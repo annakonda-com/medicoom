@@ -23,13 +23,14 @@ import com.medicoom.fragments.InputMedicineFragment;
 import com.medicoom.fragments.MainFragment;
 import com.medicoom.fragments.TreatmentFragment;
 
-
+//TODO: Прописать логику изменения лекарства в бд
 public class MainActivity extends AppCompatActivity {
     public FirebaseAuth auth;
     final String MAIN_FRAGMENT = "main_fragment";
 
     private void setMainFragments(Fragment fr){
          FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
          ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
          ft.addToBackStack("name");
          ft.commit();

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_inverseOnSurface"
+    tools:context=".fragments.ChangeMedicineFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar_input_med"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_surface"
+            android:gravity="top"
+            app:title="Лекарство"
+            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+            app:titleTextColor="@color/md_theme_onSurface" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/my_toolbar_input_med"
+            android:hint="@string/name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dosage_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_layout"
+            android:hint="@string/dosage">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/num_of_tablets_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dosage_layout"
+            android:hint="@string/num_of_tablets">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num_of_tablets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/input_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/outlined_rounded_rect"
+            android:layout_below="@+id/num_of_tablets_layout"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/input_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/good_until"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_centerVertical="true"
+                android:textColor="@color/md_theme_secondary"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendar_today"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remind_me_when"
+            android:layout_below="@+id/input_date_layout"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_marginStart="8dp"
+            android:id="@+id/remind_when"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_min_tablets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/remind_when"
+            android:layout_below="@+id/input_date_layout"
+            android:hint=""
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/min_tablets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tablets_or_portions"
+            android:layout_below="@+id/input_min_tablets"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_marginStart="8dp"
+            android:id="@+id/tabs_or_port"/>
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/save_changes"
+            android:layout_below="@+id/tabs_or_port"
+            android:paddingEnd="55dp"
+            android:paddingStart="55dp"
+            android:layout_marginTop="32dp"
+            android:layout_centerHorizontal="true">
+        </Button>
+    </RelativeLayout>
+</FrameLayout>

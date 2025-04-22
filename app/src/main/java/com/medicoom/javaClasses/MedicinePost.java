@@ -5,4 +5,7 @@ public class MedicinePost extends Medicine{
         super(name, dosage, num_of_tablets, good_until, remind_when);
         this.post_id = post_id;
     }
+    public String getPostId(){
+        return this.post_id;
+    }
 }

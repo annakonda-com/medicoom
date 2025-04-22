@@ -48,15 +48,19 @@ public class InputMedicineFragment extends Fragment {
 
     public void selfKill() {
         BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
+        bottomBar.animate().alpha(1.0f);
         bottomBar.setVisibility(View.VISIBLE);
 
         Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
+        tlbt.animate().alpha(1.0f);
         tlbt.setVisibility(View.VISIBLE);
 
         FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
+        nftb.animate().alpha(1.0f);
         nftb.setVisibility(View.VISIBLE);
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.replace(R.id.fragment_container, new FarmacyFragment());
         ft.commit();
     }
@@ -81,7 +85,7 @@ public class InputMedicineFragment extends Fragment {
         view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText name, dosage, num_of_tablets, remind_when;
+                EditText name, dosage;
                 name = view.findViewById(R.id.name);
                 dosage = view.findViewById(R.id.dosage);
                 if (validateForm(view)) {
