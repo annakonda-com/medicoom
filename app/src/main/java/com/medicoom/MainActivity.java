@@ -2,6 +2,7 @@ package com.medicoom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.medicoom.fragments.BaseFragment;
 import com.medicoom.fragments.FarmacyFragment;
 import com.medicoom.fragments.HistoryFragment;
 import com.medicoom.fragments.InputMedicineFragment;
@@ -27,14 +29,16 @@ import com.medicoom.fragments.TreatmentFragment;
 public class MainActivity extends AppCompatActivity {
     public FirebaseAuth auth;
     final String MAIN_FRAGMENT = "main_fragment";
+    final String FULL_SCREEN = "full_screen";
 
-    private void setMainFragments(Fragment fr){
-         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-         ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
-         ft.addToBackStack("name");
-         ft.commit();
-     }
+    private void setMainFragments(Fragment fr) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
+        ft.addToBackStack("name");
+        ft.commit();
+    }
+
     public void setBottomNavigation() {
         findViewById(R.id.menuToday).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,19 +96,20 @@ public class MainActivity extends AppCompatActivity {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(R.string.today);
             }
-            MainFragment fr = new MainFragment();
-            setMainFragments(fr);
+            if (getSupportFragmentManager().getFragments().isEmpty()) {
+                MainFragment fr = new MainFragment();
+                setMainFragments(fr);
+            }
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
-                    if (getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                            instanceof InputMedicineFragment){
-                        InputMedicineFragment fr = (InputMedicineFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                        fr.selfKill();
-                    }else if (getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                            instanceof MainFragment){
+                    if (getSupportFragmentManager().findFragmentByTag(FULL_SCREEN) != null) {
+                        BaseFragment full_fr = (BaseFragment) getSupportFragmentManager().findFragmentByTag(FULL_SCREEN);
+                        full_fr.selfKill();
+                    } else if (getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                            instanceof MainFragment) {
                         finish();
-                    }else if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT) != null){
+                    } else if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT) != null) {
                         if (getSupportActionBar() != null) {
                             getSupportActionBar().setTitle(R.string.today);
                         }

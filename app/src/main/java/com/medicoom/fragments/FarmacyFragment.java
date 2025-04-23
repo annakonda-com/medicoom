@@ -40,11 +40,13 @@ public class FarmacyFragment extends Fragment {
     private final String REMIND_WHEN = "remind_when";
     private final String POST_ID = "post_id";
 
+    final String FULL_SCREEN = "full_screen";
+
     public FarmacyFragment() {
         // Required empty public constructor
     }
 
-    private void prepareSpace(){
+    /*private void prepareSpace(){
         BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
         //bottomBar.animate().alpha(0.0f);
         bottomBar.setVisibility(View.GONE);
@@ -60,7 +62,7 @@ public class FarmacyFragment extends Fragment {
         FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
         //nftb.animate().alpha(0.0f);
         nftb.setVisibility(View.GONE);
-    }
+    }*/
 
 
     @Override
@@ -72,7 +74,7 @@ public class FarmacyFragment extends Fragment {
         view.findViewById(R.id.add_medicine).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prepareSpace();
+                //prepareSpace();
                /* FrameLayout frame = findViewById(R.id.fragment_container);
                 frame.setVisibility(View.);*/
 
@@ -81,8 +83,7 @@ public class FarmacyFragment extends Fragment {
                 InputMedicineFragment inpfr = new InputMedicineFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.replace(R.id.fragment_container, inpfr);
-                ft.addToBackStack(null);
+                ft.replace(R.id.main, inpfr, FULL_SCREEN);
                 ft.commit();
             }
         });
@@ -101,7 +102,7 @@ public class FarmacyFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                prepareSpace();
+                //prepareSpace();
 
                 MedicinePost curr_med = listAdapter.getItem(position);
 
@@ -121,7 +122,7 @@ public class FarmacyFragment extends Fragment {
 
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.replace(R.id.fragment_container, chfr);
+                ft.replace(R.id.main, chfr, FULL_SCREEN);
                 ft.addToBackStack(null);
                 ft.commit();
             }

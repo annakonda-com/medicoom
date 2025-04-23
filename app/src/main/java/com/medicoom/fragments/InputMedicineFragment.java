@@ -35,7 +35,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class InputMedicineFragment extends Fragment {
+public class InputMedicineFragment extends BaseFragment {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
     public int startDate = -1;
@@ -46,25 +46,12 @@ public class InputMedicineFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
     public void selfKill() {
-        BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
-        //bottomBar.animate().alpha(1.0f);
-        bottomBar.setVisibility(View.VISIBLE);
-
-        Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
-        //tlbt.animate().alpha(1.0f);
-        tlbt.setVisibility(View.VISIBLE);
-
-        FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
-        //nftb.animate().alpha(1.0f);
-        nftb.setVisibility(View.VISIBLE);
-
+        super.selfKill();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.replace(R.id.fragment_container, new FarmacyFragment());
-        ft.commit();
+        ft.replace(R.id.main, new FarmacyFragment());
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +66,7 @@ public class InputMedicineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selfKill();
+
             }
         });
         showCalendarDialog(view.findViewById(R.id.input_date), view.findViewById(R.id.input_date_layout));

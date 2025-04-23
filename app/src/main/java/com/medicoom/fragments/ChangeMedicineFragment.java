@@ -23,7 +23,7 @@ import com.medicoom.javaClasses.MedicinePost;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class ChangeMedicineFragment extends Fragment {
+public class ChangeMedicineFragment extends BaseFragment {
 
     private String name;
     private String dosage;
@@ -46,6 +46,13 @@ public class ChangeMedicineFragment extends Fragment {
     }
 
     @Override
+    public void selfKill() {
+        super.selfKill();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main, new FarmacyFragment());
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -57,6 +64,7 @@ public class ChangeMedicineFragment extends Fragment {
             post_id = getArguments().getString(POST_ID);
         }
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -85,7 +93,7 @@ public class ChangeMedicineFragment extends Fragment {
             TextView etg = view.findViewById(R.id.input_date);
             etg.setText(dateFormat.format(good_until * 1000L));
         }
-        if (remind_when != -1){
+        if (remind_when != -1) {
             EditText etr = view.findViewById(R.id.min_tablets);
             etr.setText(String.valueOf(remind_when));
         }
@@ -99,19 +107,4 @@ public class ChangeMedicineFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_change_medicine, container, false);
     }
 
-    public void selfKill() {
-        BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
-        bottomBar.setVisibility(View.VISIBLE);
-
-        Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
-        tlbt.setVisibility(View.VISIBLE);
-
-        FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
-        nftb.setVisibility(View.VISIBLE);
-
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.replace(R.id.fragment_container, new FarmacyFragment());
-        ft.commit();
-    }
 }
