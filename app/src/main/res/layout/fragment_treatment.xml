@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TreatmentFragment"
-    android:background="@color/md_theme_inverseOnSurface">
+    android:background="@color/md_theme_inverseOnSurface"
+    tools:context=".fragments.TreatmentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/treatment" />
+        android:layout_height="match_parent">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            app:checkedButton="@+id/active"
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/active"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/active" />
+
+            <Button
+                android:id="@+id/archive"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/archive" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_treatment"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="100dp"
+            android:src="@drawable/edit" />
+    </RelativeLayout>
 
 </FrameLayout>

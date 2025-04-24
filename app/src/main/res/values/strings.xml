@@ -34,5 +34,11 @@
     <string name="med_delete">Удаление лекарства</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="remove_date">Убрать срок годности</string>
+    <string name="active">Активное</string>
+    <string name="archive">Архив</string>
+    <string name="dont_remind">Не уведомлять</string>
+    <string name="pause">Пауза</string>
+    <string name="to_archive">В архив</string>
+    <string name="stop_get">Прекратить приём</string>
 
 </resources>

@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ChangeMedicineFragment extends BaseFragment {
+public class ChangeMedicineFragment extends Fragment {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
     public int startDate = -1;
@@ -64,15 +64,6 @@ public class ChangeMedicineFragment extends BaseFragment {
     }
 
     @Override
-    public void selfKill() {
-        super.selfKill();
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.replace(R.id.fragment_container, new FarmacyFragment());
-        ft.commit();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -95,7 +86,7 @@ public class ChangeMedicineFragment extends BaseFragment {
         my_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selfKill();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -143,7 +134,7 @@ public class ChangeMedicineFragment extends BaseFragment {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(getActivity(), "Успешно обновлено!", Toast.LENGTH_LONG).show();
-                                    selfKill();
+                                    getActivity().getSupportFragmentManager().popBackStack();
                                 }
                             });
                 }

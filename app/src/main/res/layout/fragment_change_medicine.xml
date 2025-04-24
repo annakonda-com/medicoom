@@ -10,9 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar_input_med"
@@ -29,7 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/my_toolbar_input_med"
-            android:hint="@string/name">
+            android:hint="@string/name"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -42,7 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name_layout"
-            android:hint="@string/dosage">
+            android:hint="@string/dosage"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dosage"
@@ -51,6 +53,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:id="@+id/num_of_tablets_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,6 +68,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:id="@+id/input_date_layout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -89,6 +95,8 @@
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
         <CheckBox android:layout_width="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/input_date_layout"
             android:id="@+id/without_date_chb"
@@ -96,19 +104,21 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             android:text="@string/remind_me_when"
             android:layout_below="@+id/without_date_chb"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:id="@+id/remind_when"/>
         <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:id="@+id/input_min_tablets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/remind_when"
             android:layout_below="@+id/without_date_chb"
-            android:hint=""
-            android:layout_marginStart="8dp">
+            android:hint="">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/min_tablets"

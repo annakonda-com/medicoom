@@ -74,17 +74,12 @@ public class FarmacyFragment extends Fragment {
         view.findViewById(R.id.add_medicine).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //prepareSpace();
-               /* FrameLayout frame = findViewById(R.id.fragment_container);
-                frame.setVisibility(View.);*/
-
-                //RelativeLayout body = findViewById(R.id.body);
-                //body.setVisibility(View.GONE);
                 InputMedicineFragment inpfr = new InputMedicineFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.remove(FarmacyFragment.this);
                 ft.replace(R.id.main, inpfr, FULL_SCREEN);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_dont_remind"
+        android:title="@string/dont_remind"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_pause"
+        android:title="@string/pause"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_to_archive"
+        android:title="@string/to_archive"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_stop_get"
+        android:title="@string/stop_get"
+        app:showAsAction="never" />
+</menu>

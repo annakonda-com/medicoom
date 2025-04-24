@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -18,14 +17,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.medicoom.fragments.BaseFragment;
 import com.medicoom.fragments.FarmacyFragment;
 import com.medicoom.fragments.HistoryFragment;
-import com.medicoom.fragments.InputMedicineFragment;
 import com.medicoom.fragments.MainFragment;
 import com.medicoom.fragments.TreatmentFragment;
 
-//TODO: Прописать логику изменения лекарства в бд
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     public FirebaseAuth auth;
     final String MAIN_FRAGMENT = "main_fragment";
@@ -104,22 +102,19 @@ public class MainActivity extends AppCompatActivity {
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
-                    for (Fragment x: getSupportFragmentManager().getFragments()){
-                        Log.d("MAYTAG", x.toString());
-                    }
-                    if (getSupportFragmentManager().findFragmentByTag(FULL_SCREEN) != null) {
-                        BaseFragment full_fr = (BaseFragment) getSupportFragmentManager().findFragmentByTag(FULL_SCREEN);
-                        full_fr.selfKill();
-                    } else if (getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                            instanceof MainFragment) {
+                    List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                    Fragment last_fragment = fragments.get(fragments.size() - 1);
+
+                    if (last_fragment.getTag().equals(FULL_SCREEN)) {
+                        getSupportFragmentManager().popBackStack();
+                    } else if (last_fragment instanceof MainFragment) {
                         finish();
-                    } else if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT) != null) {
+                    } else if (last_fragment.getTag().equals(MAIN_FRAGMENT)) {
                         Toolbar tlbr = findViewById(R.id.my_toolbar);
                         tlbr.setTitle(R.string.today);
                         MainFragment fr = new MainFragment();
                         setMainFragments(fr);
                     }
-
                 }
             };
             Toolbar tlbar = findViewById(R.id.my_toolbar);
