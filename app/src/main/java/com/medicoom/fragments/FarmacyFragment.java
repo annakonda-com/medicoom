@@ -83,6 +83,7 @@ public class FarmacyFragment extends Fragment {
                 InputMedicineFragment inpfr = new InputMedicineFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.remove(FarmacyFragment.this);
                 ft.replace(R.id.main, inpfr, FULL_SCREEN);
                 ft.commit();
             }
@@ -118,8 +119,6 @@ public class FarmacyFragment extends Fragment {
 
                 chfr.setArguments(bund);
 
-                Log.d("QWERTY", curr_med.toString());
-
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.replace(R.id.main, chfr, FULL_SCREEN);
@@ -151,7 +150,7 @@ public class FarmacyFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e("TAG", "loadMedicine:onCancelled", databaseError.toException());
+                Log.e("Firebase", "loadMedicine:onCancelled", databaseError.toException());
             }
         };
         mDatabase.addValueEventListener(medListener);

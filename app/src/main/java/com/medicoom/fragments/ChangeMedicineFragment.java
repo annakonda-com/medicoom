@@ -67,7 +67,9 @@ public class ChangeMedicineFragment extends BaseFragment {
     public void selfKill() {
         super.selfKill();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main, new FarmacyFragment());
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.replace(R.id.fragment_container, new FarmacyFragment());
+        ft.commit();
     }
 
     @Override

@@ -96,15 +96,17 @@ public class MainActivity extends AppCompatActivity {
                 return insets;
             });
             if (getSupportFragmentManager().getFragments().isEmpty()) {
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(R.string.today);
-                }
+                Toolbar tlbr = findViewById(R.id.my_toolbar);
+                tlbr.setTitle(R.string.today);
                 MainFragment fr = new MainFragment();
                 setMainFragments(fr);
             }
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
+                    for (Fragment x: getSupportFragmentManager().getFragments()){
+                        Log.d("MAYTAG", x.toString());
+                    }
                     if (getSupportFragmentManager().findFragmentByTag(FULL_SCREEN) != null) {
                         BaseFragment full_fr = (BaseFragment) getSupportFragmentManager().findFragmentByTag(FULL_SCREEN);
                         full_fr.selfKill();
@@ -112,9 +114,8 @@ public class MainActivity extends AppCompatActivity {
                             instanceof MainFragment) {
                         finish();
                     } else if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT) != null) {
-                        if (getSupportActionBar() != null) {
-                            getSupportActionBar().setTitle(R.string.today);
-                        }
+                        Toolbar tlbr = findViewById(R.id.my_toolbar);
+                        tlbr.setTitle(R.string.today);
                         MainFragment fr = new MainFragment();
                         setMainFragments(fr);
                     }

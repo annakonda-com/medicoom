@@ -42,6 +42,8 @@ public class InputMedicineFragment extends BaseFragment {
     public int int_num_of_tablets = -1;
     public int int_remind_when = -1;
 
+    final String MAIN_FRAGMENT = "main_fragment";
+
     public InputMedicineFragment() {
         // Required empty public constructor
     }
@@ -50,7 +52,8 @@ public class InputMedicineFragment extends BaseFragment {
     public void selfKill() {
         super.selfKill();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main, new FarmacyFragment());
+        ft.replace(R.id.fragment_container, new FarmacyFragment(), MAIN_FRAGMENT);
+        ft.commit();
     }
 
     @Override
