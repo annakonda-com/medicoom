@@ -38,7 +38,7 @@ public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.medicine_item, null);
         }
         Log.d("TAG", med.toString());
-        Log.d("TAG",Integer.toString(med.good_until));
+        Log.d("TAG", Integer.toString(med.good_until));
         ((TextView) convertView.findViewById(R.id.medicine_dosage)).setVisibility(View.GONE);
         ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets)).setVisibility(View.GONE);
         ((TextView) convertView.findViewById(R.id.medicine_good_until)).setVisibility(View.GONE);
@@ -57,9 +57,11 @@ public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
             String str = med.num_of_tablets + "шт";
             ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets)).setVisibility(View.VISIBLE);
             ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets)).setText(str);
-            if (med.remind_when != -1 && med.num_of_tablets <= med.remind_when) {
-                ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets))
-                        .setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_error));
+            if (med.remind_when != -1) {
+                if (med.num_of_tablets <= med.remind_when) {
+                    ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets))
+                            .setTextColor(ContextCompat.getColor(getContext(), R.color.md_theme_error));
+                }
             }
         }
         if (med.good_until != -1) {

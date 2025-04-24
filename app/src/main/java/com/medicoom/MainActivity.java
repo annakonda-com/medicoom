@@ -43,9 +43,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuToday).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(R.string.today);
-                }
+                Toolbar tlbr = findViewById(R.id.my_toolbar);
+                tlbr.setTitle(R.string.today);
                 MainFragment fr = new MainFragment();
                 setMainFragments(fr);
             }
@@ -53,9 +52,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuFarmacy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(R.string.farmacy);
-                }
+                Toolbar tlbr = findViewById(R.id.my_toolbar);
+                tlbr.setTitle(R.string.farmacy);
                 FarmacyFragment fr = new FarmacyFragment();
                 setMainFragments(fr);
             }
@@ -63,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuTreatment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toolbar tlbr = findViewById(R.id.my_toolbar);
+                tlbr.setTitle(R.string.treatment);
                 TreatmentFragment fr = new TreatmentFragment();
                 setMainFragments(fr);
             }
@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toolbar tlbr = findViewById(R.id.my_toolbar);
+                tlbr.setTitle(R.string.history);
                 HistoryFragment fr = new HistoryFragment();
                 setMainFragments(fr);
             }
@@ -93,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
             });
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(R.string.today);
-            }
             if (getSupportFragmentManager().getFragments().isEmpty()) {
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.today);
+                }
                 MainFragment fr = new MainFragment();
                 setMainFragments(fr);
             }

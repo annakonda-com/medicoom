@@ -1,5 +1,6 @@
 package com.medicoom.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,7 @@ import com.medicoom.javaClasses.MedicinePost;
 import com.medicoom.utils.myUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class ChangeMedicineFragment extends BaseFragment {
@@ -82,6 +87,7 @@ public class ChangeMedicineFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        showCalendarDialog(view.findViewById(R.id.input_date), view.findViewById(R.id.input_date_layout));
         Toolbar my_toolbar = view.findViewById(R.id.my_toolbar_input_med);
         my_toolbar.setNavigationIcon(R.drawable.arrow_back);
         my_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -114,12 +120,16 @@ public class ChangeMedicineFragment extends BaseFragment {
         Button save = view.findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                EditText name, dosage;
-                name = view.findViewById(R.id.name);
+            public void onClick(View btn) {
+                EditText edit_name, dosage;
+                edit_name = view.findViewById(R.id.name);
                 dosage = view.findViewById(R.id.dosage);
                 if (validateForm(view)) {
-                    Medicine newPost = new Medicine(name.getText().toString(),
+                    CheckBox remove_date = view.findViewById(R.id.without_date_chb);
+                    if (remove_date.isChecked()){
+                        startDate = -1;
+                    }
+                    Medicine newPost = new Medicine(edit_name.getText().toString(),
                             dosage.getText().toString(), int_num_of_tablets,
                             startDate, int_remind_when);
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance
@@ -139,41 +149,75 @@ public class ChangeMedicineFragment extends BaseFragment {
             }
         });
 
+
+    }
+
+    void showCalendarDialog(TextView myview, RelativeLayout layout) {
+        DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker v, int year, int monthOfYear, int dayOfMonth) {
+                Calendar loc_startDate = Calendar.getInstance();
+                loc_startDate.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
+                myview.setText(dateFormat.format(loc_startDate.getTime()));
+                startDate = (int) (loc_startDate.getTimeInMillis() / 1000L);
+            }
+        };
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                new DatePickerDialog(getActivity(), dateListener,
+                        c.get(Calendar.YEAR),
+                        c.get(Calendar.MONTH),
+                        c.get(Calendar.DAY_OF_MONTH))
+                        .show();
+            }
+        });
     }
 
     boolean validateForm(View view) {
         boolean valid = true;
-        EditText name, dosage, num_of_tablets, remind_when;
-        name = view.findViewById(R.id.name);
-        dosage = view.findViewById(R.id.dosage);
-        num_of_tablets = view.findViewById(R.id.num_of_tablets);
-        remind_when = view.findViewById(R.id.min_tablets);
-        if (name.getText().toString().isEmpty()) {
-            name.setError("Обязательное поле");
+        EditText edit_name, edit_dosage, edit_num_of_tablets, edit_remind_when;
+        edit_name = view.findViewById(R.id.name);
+        edit_dosage = view.findViewById(R.id.dosage);
+        edit_num_of_tablets = view.findViewById(R.id.num_of_tablets);
+        edit_remind_when = view.findViewById(R.id.min_tablets);
+        if (edit_name.getText().toString().isEmpty()) {
+            edit_name.setError("Обязательное поле");
             valid = false;
         } else {
-            if (myUtils.isSpace(name.getText().toString())) {
-                name.setError("Поле пустое");
+            if (myUtils.isSpace(edit_name.getText().toString())) {
+                edit_name.setError("Поле пустое");
                 valid = false;
             } else {
-                name.setError(null);
+                edit_name.setError(null);
             }
         }
-        if (!dosage.getText().toString().isEmpty() && myUtils.isSpace(name.getText().toString())) {
-            dosage.setError("Поле пустое");
+        if (!edit_dosage.getText().toString().isEmpty() && myUtils.isSpace(edit_name.getText().toString())) {
+            edit_dosage.setError("Поле пустое");
             valid = false;
         } else {
-            dosage.setError(null);
+            edit_dosage.setError(null);
         }
-        if (!num_of_tablets.getText().toString().isEmpty() && !myUtils.isSpace(remind_when.getText().toString())) {
+        if (!edit_num_of_tablets.getText().toString().isEmpty() && !myUtils.isSpace(edit_remind_when.getText().toString())) {
             try {
-                int_num_of_tablets = Integer.parseInt(num_of_tablets.getText().toString());
-                num_of_tablets.setError(null);
+                int_num_of_tablets = Integer.parseInt(edit_num_of_tablets.getText().toString());
+                edit_num_of_tablets.setError(null);
             } catch (NumberFormatException e) {
-                num_of_tablets.setError("Введите число!");
+                edit_num_of_tablets.setError("Введите число!");
                 valid = false;
             }
         }
+        if (!edit_remind_when.getText().toString().isEmpty() && !myUtils.isSpace(edit_remind_when.getText().toString())) {
+            try {
+                int_remind_when = Integer.parseInt(edit_remind_when.getText().toString());
+                edit_remind_when.setError(null);
+            } catch (NumberFormatException e) {
+                edit_remind_when.setError("Введите число!");
+                valid = false;
+            }
+        }
+        return valid;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

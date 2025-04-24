@@ -134,10 +134,11 @@ public class InputMedicineFragment extends BaseFragment {
         }
         if (!remind_when.getText().toString().isEmpty() && !myUtils.isSpace(remind_when.getText().toString())) {
             try {
-                int_remind_when = Integer.parseInt(num_of_tablets.getText().toString());
+                int_remind_when = Integer.parseInt(remind_when.getText().toString());
                 remind_when.setError(null);
             } catch (NumberFormatException e) {
                 remind_when.setError("Введите число!");
+                valid = false;
             }
         }
         return valid;

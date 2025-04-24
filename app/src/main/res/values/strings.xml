@@ -19,7 +19,7 @@
     <string name="settings">Настройки</string>
     <string name="farmacy">Аптечка</string>
     <string name="treatment">Лечение</string>
-    <string name="history">история</string>
+    <string name="history">История</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Название</string>
     <string name="dosage">Дозировка</string>
@@ -33,5 +33,6 @@
     <string name="no">Нет</string>
     <string name="med_delete">Удаление лекарства</string>
     <string name="save_changes">Сохранить изменения</string>
+    <string name="remove_date">Убрать срок годности</string>
 
 </resources>

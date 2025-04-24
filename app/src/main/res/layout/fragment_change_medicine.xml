@@ -10,7 +10,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar_input_med"
@@ -32,8 +34,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -46,8 +47,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dosage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,8 +60,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/num_of_tablets"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
@@ -70,8 +69,7 @@
             android:layout_height="56dp"
             android:background="@drawable/outlined_rounded_rect"
             android:layout_below="@+id/num_of_tablets_layout"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginTop="4dp">
 
             <TextView
                 android:id="@+id/input_date"
@@ -90,30 +88,33 @@
                 android:layout_marginEnd="16dp"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
+        <CheckBox android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_date_layout"
+            android:id="@+id/without_date_chb"
+            android:text="@string/remove_date"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/remind_me_when"
-            android:layout_below="@+id/input_date_layout"
+            android:layout_below="@+id/without_date_chb"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_marginStart="8dp"
             android:id="@+id/remind_when"/>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_min_tablets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/remind_when"
-            android:layout_below="@+id/input_date_layout"
+            android:layout_below="@+id/without_date_chb"
             android:hint=""
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp">
+            android:layout_marginStart="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/min_tablets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -121,7 +122,6 @@
             android:text="@string/tablets_or_portions"
             android:layout_below="@+id/input_min_tablets"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="8dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:layout_marginStart="8dp"
             android:id="@+id/tabs_or_port"/>
