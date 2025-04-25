@@ -40,5 +40,11 @@
     <string name="pause">Пауза</string>
     <string name="to_archive">В архив</string>
     <string name="stop_get">Прекратить приём</string>
+    <string name="start_date">Дата начала приёма</string>
+    <string name="how_long_to_get">Сколько времени принимать</string>
+    <string name="forever">Постоянно</string>
+    <string name="for_some_time">В течение определённого времени</string>
+    <string name="overall_duration">Общая длительность приёма (дней)</string>
+    <string name="how_much_a_day">Сколько раз в день принимать</string>
 
 </resources>

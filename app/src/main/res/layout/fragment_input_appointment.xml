@@ -1,31 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/md_theme_inverseOnSurface"
     tools:context=".fragments.InputAppointmentFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/md_theme_primary">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            app:title="Лекарство"
-            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-            app:titleTextColor="@color/md_theme_onSurface"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/md_theme_surface"
-            android:gravity="top" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Тут создаём назначение"
-            android:layout_below="@id/my_toolbar"/>
-    </RelativeLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/md_theme_surface"
+                android:gravity="top"
+                app:title="Назначение"
+                app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+                app:titleTextColor="@color/md_theme_onSurface" />
 
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_below="@id/my_toolbar"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/outlined_rounded_rect" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinner"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <RelativeLayout
+                android:id="@+id/input_date_layout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_below="@+id/divider"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/outlined_rounded_rect">
+
+                <TextView
+                    android:id="@+id/input_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/start_date"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_secondary" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/calendar_today" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_date_layout"
+                android:layout_margin="8dp"
+                android:text="@string/how_long_to_get"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+            <RadioGroup
+                android:id="@+id/how_long"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/md_theme_surfaceContainerLowest"
+                    android:padding="8dp"
+                    android:id="@+id/forever"
+                    android:text="@string/forever" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@color/md_theme_surfaceContainerLowest"
+                    android:padding="8dp"
+                    android:text="@string/for_some_time"
+                    android:id="@+id/not_forever"/>
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/overall_duration_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/how_long"
+                android:hint="@string/overall_duration"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/overall_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overall_duration_layout"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider1"
+                android:layout_marginStart="8dp"
+                android:text="@string/how_much_a_day"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+            <Spinner
+                android:id="@+id/how_much_a_day"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_below="@id/text_view1"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/outlined_rounded_rect" />
+            <ListView
+                android:id="@+id/time_inputs_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:divider="@null"
+                android:dividerHeight="8dp"
+                android:paddingBottom="90dp"
+                android:layout_below="@+id/how_much_a_day">
+            </ListView>
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

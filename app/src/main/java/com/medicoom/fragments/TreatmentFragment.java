@@ -10,10 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.medicoom.R;
+import com.medicoom.javaClasses.MedicineAdapter;
+import com.medicoom.javaClasses.MedicineSpinnerAdapter;
 
 
 public class TreatmentFragment extends Fragment {

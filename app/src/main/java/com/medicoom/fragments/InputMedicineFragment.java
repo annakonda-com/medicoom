@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.medicoom.javaClasses.Medicine;
 import com.medicoom.R;
+import com.medicoom.javaClasses.MedicinePost;
+import com.medicoom.javaClasses.MedicineSpinnerAdapter;
 import com.medicoom.utils.myUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -165,7 +169,6 @@ public class InputMedicineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_input_medicine, container, false);
     }
 }
