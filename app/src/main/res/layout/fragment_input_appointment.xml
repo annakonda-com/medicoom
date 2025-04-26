@@ -7,159 +7,463 @@
     android:background="@color/md_theme_inverseOnSurface"
     tools:context=".fragments.InputAppointmentFragment">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_surface"
+            android:gravity="top"
+            app:title="Назначение"
+            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+            app:titleTextColor="@color/md_theme_onSurface" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/my_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/md_theme_surface"
-                android:gravity="top"
-                app:title="Назначение"
-                app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                app:titleTextColor="@color/md_theme_onSurface" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_farmacy"
-                android:layout_below="@+id/my_toolbar"
-                android:id="@+id/choose_farmacy"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"/>
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_below="@id/choose_farmacy"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/outlined_rounded_rect" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/spinner"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/my_toolbar">
 
             <RelativeLayout
-                android:id="@+id/input_date_layout"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_below="@+id/divider"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/outlined_rounded_rect">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/input_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/start_date"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                    android:textColor="@color/md_theme_secondary" />
-
-                <ImageView
+                    android:id="@+id/choose_farmacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/calendar_today" />
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/choose_farmacy"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_below="@id/choose_farmacy"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/outlined_rounded_rect" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinner"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <RelativeLayout
+                    android:id="@+id/input_date_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_below="@+id/divider"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/outlined_rounded_rect">
+
+                    <TextView
+                        android:id="@+id/input_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/start_date"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textColor="@color/md_theme_secondary" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/calendar_today" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/input_date_layout"
+                    android:layout_margin="8dp"
+                    android:text="@string/how_long_to_get"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <RadioGroup
+                    android:id="@+id/how_long"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_view">
+
+                    <RadioButton
+                        android:id="@+id/forever"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/forever" />
+
+                    <RadioButton
+                        android:id="@+id/not_forever"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/for_some_time" />
+                </RadioGroup>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/overall_duration_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/how_long"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/overall_duration"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/overall_duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/overall_duration_layout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/text_view1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider1"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/how_much_a_day"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <Spinner
+                    android:id="@+id/how_much_a_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_below="@id/text_view1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/outlined_rounded_rect" />
+
+                <LinearLayout
+                    android:id="@+id/times_inputs_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/how_much_a_day"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/input1"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input2"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input3"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input4"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input5"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input6"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input7"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input8"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input9"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input10"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input11"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/input12"
+                        layout="@layout/time_input"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/times_inputs_container"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/text_view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider2"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/graphic"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <RadioGroup
+                    android:id="@+id/graphic_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_view2">
+
+                    <RadioButton
+                        android:id="@+id/every_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/every_day" />
+
+                    <RadioButton
+                        android:id="@+id/by_week"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/by_week" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/days_of_week"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/by_week"
+                        android:layout_centerHorizontal="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/monday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/monday" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/tuesday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tuesday" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/wednesday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/wednesday" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/thursday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/thursday" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/friday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/friday" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/saturday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/saturday" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/sunday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sunday" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <RadioButton
+                        android:id="@+id/at_some_of_days"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/Once_at_some_days" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/for_how_much_days_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="@string/in_how_much_days"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/for_how_much_days"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RadioGroup>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/graphic_layout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/text_view3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider3"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/how_to_get"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <RadioGroup
+                    android:id="@+id/how_get_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_view3">
+
+                    <RadioButton
+                        android:id="@+id/before"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/before" />
+
+                    <RadioButton
+                        android:id="@+id/after"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/after_eat" />
+
+                    <RadioButton
+                        android:id="@+id/personal"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/md_theme_surfaceContainerLowest"
+                        android:padding="8dp"
+                        android:text="@string/personal" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/how_to_get_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="@string/how_to_get"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/how_to_get"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RadioGroup>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/how_get_layout"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/num_of_tablets_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider4"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/num_of_tablets_at_once"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/num_of_tablets"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/send_notific"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/num_of_tablets_layout"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/send_notific"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/send_notific"
+                    android:layout_centerHorizontal="true"
+                    android:paddingStart="55dp"
+                    android:paddingEnd="55dp"
+                    android:text="@string/save" />
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/input_date_layout"
-                android:layout_margin="8dp"
-                android:text="@string/how_long_to_get"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-
-            <RadioGroup
-                android:id="@+id/how_long"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text_view">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/md_theme_surfaceContainerLowest"
-                    android:padding="8dp"
-                    android:id="@+id/forever"
-                    android:text="@string/forever" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@color/md_theme_surfaceContainerLowest"
-                    android:padding="8dp"
-                    android:text="@string/for_some_time"
-                    android:id="@+id/not_forever"/>
-            </RadioGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/overall_duration_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/how_long"
-                android:hint="@string/overall_duration"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/overall_duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/overall_duration_layout"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/text_view1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/divider1"
-                android:layout_marginStart="8dp"
-                android:text="@string/how_much_a_day"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-            <Spinner
-                android:id="@+id/how_much_a_day"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_below="@id/text_view1"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/outlined_rounded_rect" />
-            <LinearLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/times_inputs_container"
-                android:orientation="vertical"
-                android:layout_below="@+id/how_much_a_day">
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+        </ScrollView>
+    </RelativeLayout>
 </FrameLayout>

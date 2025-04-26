@@ -49,5 +49,23 @@
     <string name="choose_farmacy">Выберите лекарство из списка</string>
     <string name="begin_get">Начать принимать лекарство</string>
     <string name="time_of_get">Время приёма</string>
+    <string name="graphic">График приёма</string>
+    <string name="every_day">Каждый день</string>
+    <string name="by_week">По дням недели</string>
+    <string name="monday">Пн</string>
+    <string name="tuesday">Вт</string>
+    <string name="wednesday">Ср</string>
+    <string name="thursday">Чт</string>
+    <string name="friday">Пт</string>
+    <string name="saturday">Сб</string>
+    <string name="sunday">Вс</string>
+    <string name="Once_at_some_days">Раз в несколько дней</string>
+    <string name="in_how_much_days">Раз во сколько дней</string>
+    <string name="how_to_get">Как принимать</string>
+    <string name="before">Перед едой</string>
+    <string name="after_eat">После еды</string>
+    <string name="personal">Свой вариант</string>
+    <string name="num_of_tablets_at_once">Количество таблеток или порций за 1 приём</string>
+    <string name="send_notific">Присылать уведомления о приёме</string>
 
 </resources>

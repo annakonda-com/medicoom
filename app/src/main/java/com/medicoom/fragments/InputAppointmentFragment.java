@@ -80,28 +80,20 @@ public class InputAppointmentFragment extends Fragment {
                 if (times != null){
                     times.clear();
                 }
-                Log.d("MAYTAG", "-----");
-                for (int x: times){
-                    Log.d("MAYTAG", String.valueOf(x));
-                }
-                Log.d("MAYTAG", "-----");
-
                 LinearLayout container = view.findViewById(R.id.times_inputs_container);
-                int inputs_num = container.getChildCount();
-                if (inputs_num != 1){
-                    for (int i = 0; i < inputs_num; i++) {
-                        View input = container.getChildAt(i);
-                        container.removeView(input);
-                    }
+                for (int i = 0; i < container.getChildCount(); i++){
+                    container.getChildAt(i).setVisibility(View.GONE);
                 }
+
                 for (int i = 0; i <= position; i++){
-                    View input_time = getLayoutInflater().inflate(R.layout.time_input, container, true);
+                    View curr_inp = container.getChildAt(i);
+                    curr_inp.setVisibility(View.VISIBLE);
                     String start_text = getString(R.string.time_of_get) + " " + (i + 1);
-                    ((TextView) input_time.findViewById(R.id.input_time)).setText(start_text);
-                    input_time.setOnClickListener(new View.OnClickListener() {
+                    ((TextView) curr_inp.findViewById(R.id.input_time)).setText(start_text);
+                    curr_inp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            showTimeDialog(input_time.findViewById(R.id.input_time));
+                            showTimeDialog(curr_inp.findViewById(R.id.input_time));
                         }
                     });
                 }
@@ -117,21 +109,56 @@ public class InputAppointmentFragment extends Fragment {
         not_forever.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                View overallview = view.findViewById(R.id.overall_duration_layout);
                 if (isChecked){
-                   View overallview = view.findViewById(R.id.overall_duration_layout);
                     overallview.animate().alpha(1.0f);
-                   overallview.setVisibility(View.VISIBLE);
+                    overallview.setVisibility(View.VISIBLE);
+                } else {
+                    overallview.animate().alpha(0.0f);
+                    overallview.setVisibility(View.GONE);
                 }
             }
         });
-        RadioButton forever = view.findViewById(R.id.forever);
-        forever.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        RadioButton by_week = view.findViewById(R.id.by_week);
+        by_week.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                View days = view.findViewById(R.id.days_of_week);
                 if (isChecked){
-                    View overallview = view.findViewById(R.id.overall_duration_layout);
-                    overallview.animate().alpha(0.0f);
-                    overallview.setVisibility(View.GONE);
+                    days.animate().alpha(1.0f);
+                    days.setVisibility(View.VISIBLE);
+                } else {
+                    days.animate().alpha(0.0f);
+                    days.setVisibility(View.GONE);
+                }
+            }
+        });
+        RadioButton at_some_of_days = view.findViewById(R.id.at_some_of_days);
+        at_some_of_days.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                View days = view.findViewById(R.id.for_how_much_days_layout);
+                if (isChecked){
+                    days.animate().alpha(1.0f);
+                    days.setVisibility(View.VISIBLE);
+                } else {
+                    days.animate().alpha(0.0f);
+                    days.setVisibility(View.GONE);
+                }
+            }
+        });
+        RadioButton personal = view.findViewById(R.id.personal);
+        personal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                View how_to_get_layout = view.findViewById(R.id.how_to_get_layout);
+                if (isChecked){
+                    how_to_get_layout.animate().alpha(1.0f);
+                    how_to_get_layout.setVisibility(View.VISIBLE);
+                } else {
+                    how_to_get_layout.animate().alpha(0.0f);
+                    how_to_get_layout.setVisibility(View.GONE);
                 }
             }
         });
