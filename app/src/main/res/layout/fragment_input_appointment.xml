@@ -25,11 +25,20 @@
                 app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
                 app:titleTextColor="@color/md_theme_onSurface" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_farmacy"
+                android:layout_below="@+id/my_toolbar"
+                android:id="@+id/choose_farmacy"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"/>
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_below="@id/my_toolbar"
+                android:layout_below="@id/choose_farmacy"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -145,18 +154,12 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/outlined_rounded_rect" />
-            <ListView
-                android:id="@+id/time_inputs_list"
-                android:layout_width="wrap_content"
+            <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:divider="@null"
-                android:dividerHeight="8dp"
-                android:paddingBottom="90dp"
+                android:id="@+id/times_inputs_container"
+                android:orientation="vertical"
                 android:layout_below="@+id/how_much_a_day">
-            </ListView>
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>

@@ -33,15 +33,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
-        ft.addToBackStack("name");
+        ft.addToBackStack(null);
         ft.commit();
     }
 
     public void setBottomNavigation() {
+        Toolbar tlbr = findViewById(R.id.my_toolbar);
         findViewById(R.id.menuToday).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toolbar tlbr = findViewById(R.id.my_toolbar);
                 tlbr.setTitle(R.string.today);
                 MainFragment fr = new MainFragment();
                 setMainFragments(fr);
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuFarmacy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toolbar tlbr = findViewById(R.id.my_toolbar);
                 tlbr.setTitle(R.string.farmacy);
                 FarmacyFragment fr = new FarmacyFragment();
                 setMainFragments(fr);
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuTreatment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toolbar tlbr = findViewById(R.id.my_toolbar);
                 tlbr.setTitle(R.string.treatment);
                 TreatmentFragment fr = new TreatmentFragment();
                 setMainFragments(fr);
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.menuHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toolbar tlbr = findViewById(R.id.my_toolbar);
                 tlbr.setTitle(R.string.history);
                 HistoryFragment fr = new HistoryFragment();
                 setMainFragments(fr);
@@ -93,17 +90,22 @@ public class MainActivity extends AppCompatActivity {
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
             });
-            if (getSupportFragmentManager().getFragments().isEmpty()) {
+            /*if (getSupportFragmentManager().getFragments().isEmpty()) {
                 Toolbar tlbr = findViewById(R.id.my_toolbar);
                 tlbr.setTitle(R.string.today);
                 MainFragment fr = new MainFragment();
                 setMainFragments(fr);
-            }
+            }*/
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
                     List<Fragment> fragments = getSupportFragmentManager().getFragments();
                     Fragment last_fragment = fragments.get(fragments.size() - 1);
+                    Log.d("MAYTAG", "------");
+                    for(Fragment x: getSupportFragmentManager().getFragments()){
+                        Log.d("MAYTAG", x.toString());
+                    }
+                    Log.d("MAYTAG", "------");
 
                     if (last_fragment.getTag().equals(FULL_SCREEN)) {
                         getSupportFragmentManager().popBackStack();
@@ -117,12 +119,32 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             };
-            Toolbar tlbar = findViewById(R.id.my_toolbar);
-            tlbar.setTitle(R.string.today);
+            /*Toolbar tlbar = findViewById(R.id.my_toolbar);
+            tlbar.setTitle(R.string.today);*/
             MainActivity.this.getOnBackPressedDispatcher().addCallback(this, callback);
             setBottomNavigation();
-
         }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Fragment current_fragment = getSupportFragmentManager().findFragmentByTag("main_fragment");
+        Toolbar tlbr = findViewById(R.id.my_toolbar);
+        if (current_fragment != null){
+            if (current_fragment instanceof MainFragment){
+                tlbr.setTitle(R.string.today);
+            } else if (current_fragment instanceof  FarmacyFragment){
+                tlbr.setTitle(R.string.farmacy);
+            } else if (current_fragment instanceof TreatmentFragment){
+                tlbr.setTitle(R.string.treatment);
+            } else if (current_fragment instanceof HistoryFragment){
+                tlbr.setTitle(R.string.history);
+            }
+        }else{
+            tlbr.setTitle(R.string.today);
+            MainFragment fr = new MainFragment();
+            setMainFragments(fr);
+        }
     }
 }

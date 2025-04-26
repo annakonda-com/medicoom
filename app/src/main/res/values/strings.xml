@@ -46,5 +46,8 @@
     <string name="for_some_time">В течение определённого времени</string>
     <string name="overall_duration">Общая длительность приёма (дней)</string>
     <string name="how_much_a_day">Сколько раз в день принимать</string>
+    <string name="choose_farmacy">Выберите лекарство из списка</string>
+    <string name="begin_get">Начать принимать лекарство</string>
+    <string name="time_of_get">Время приёма</string>
 
 </resources>

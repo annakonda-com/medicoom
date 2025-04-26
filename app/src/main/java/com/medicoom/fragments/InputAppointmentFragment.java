@@ -1,13 +1,17 @@
 package com.medicoom.fragments;
 
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +19,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,12 +37,18 @@ import com.medicoom.javaClasses.Medicine;
 import com.medicoom.javaClasses.MedicinePost;
 import com.medicoom.javaClasses.MedicineSpinnerAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class InputAppointmentFragment extends Fragment {
     final String FULL_SCREEN = "full_screen";
     final String FAKE_ID = "AddNewMed";
+
+    public ArrayList<Integer> times = new ArrayList<>();
+    SimpleDateFormat timeFormat = new SimpleDateFormat("H:m", Locale.getDefault());
 
     MedicinePost picked_med;
 
@@ -57,6 +70,46 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        Spinner how_much_a_day = view.findViewById(R.id.how_much_a_day);
+        how_much_a_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                if (times != null){
+                    times.clear();
+                }
+                Log.d("MAYTAG", "-----");
+                for (int x: times){
+                    Log.d("MAYTAG", String.valueOf(x));
+                }
+                Log.d("MAYTAG", "-----");
+
+                LinearLayout container = view.findViewById(R.id.times_inputs_container);
+                int inputs_num = container.getChildCount();
+                if (inputs_num != 1){
+                    for (int i = 0; i < inputs_num; i++) {
+                        View input = container.getChildAt(i);
+                        container.removeView(input);
+                    }
+                }
+                for (int i = 0; i <= position; i++){
+                    View input_time = getLayoutInflater().inflate(R.layout.time_input, container, true);
+                    String start_text = getString(R.string.time_of_get) + " " + (i + 1);
+                    ((TextView) input_time.findViewById(R.id.input_time)).setText(start_text);
+                    input_time.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showTimeDialog(input_time.findViewById(R.id.input_time));
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -157,5 +210,27 @@ public class InputAppointmentFragment extends Fragment {
 
         
         return contentView;
+    }
+
+    void showTimeDialog(TextView view) {
+        TimePickerDialog.OnTimeSetListener timeListener = new TimePickerDialog.OnTimeSetListener() {
+            public void onTimeSet(TimePicker v, int hourOfDay, int minute) {
+                Calendar res = Calendar.getInstance();
+                res.set(0, 0, 0, hourOfDay, minute);
+                times.add(hourOfDay * 3600 + minute * 60);
+                view.setText(timeFormat.format(res.getTime()));
+            }
+        };
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                new TimePickerDialog(getContext(), timeListener,
+                        c.get(Calendar.HOUR_OF_DAY),
+                        c.get(Calendar.MINUTE), true)
+                        .show();
+            }
+        });
+
     }
 }

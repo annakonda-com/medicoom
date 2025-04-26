@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:id="@+id/input_time_layout"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@drawable/outlined_rounded_rect"
+    android:layout_below="@+id/num_of_tablets_layout"
+    android:layout_marginTop="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/input_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/time_of_get"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_centerVertical="true"
+        android:textColor="@color/md_theme_secondary"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/schedule"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

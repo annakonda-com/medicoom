@@ -60,7 +60,8 @@
                 android:id="@+id/num_of_tablets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:layout_margin="8dp"
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
@@ -112,7 +113,8 @@
                 android:id="@+id/min_tablets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:layout_margin="8dp"
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="wrap_content"
