@@ -61,80 +61,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:inputType="number"/>
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
             android:id="@+id/input_date_layout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/outlined_rounded_rect"
             android:layout_below="@+id/num_of_tablets_layout"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/outlined_rounded_rect">
 
             <TextView
                 android:id="@+id/input_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:text="@string/good_until"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:layout_centerVertical="true"
-                android:textColor="@color/md_theme_secondary"/>
+                android:textColor="@color/md_theme_secondary" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/calendar_today"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
-                android:layout_centerVertical="true"/>
+                android:src="@drawable/calendar_today" />
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/remind_when"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/remind_me_when"
             android:layout_below="@+id/input_date_layout"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:layout_marginStart="8dp"
-            android:id="@+id/remind_when"/>
+            android:text="@string/remind_me_when"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_min_tablets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/remind_when"
             android:layout_below="@+id/input_date_layout"
-            android:hint=""
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp">
+            android:layout_toEndOf="@+id/remind_when"
+            android:hint="">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/min_tablets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:inputType="number"/>
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
+            android:id="@+id/tabs_or_port"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tablets_or_portions"
             android:layout_below="@+id/input_min_tablets"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="8dp"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:layout_marginStart="8dp"
-            android:id="@+id/tabs_or_port"/>
+            android:layout_marginEnd="8dp"
+            android:text="@string/tablets_or_portions"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
         <Button
             android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="@string/save"
+            style="@style/save_button"
             android:layout_below="@+id/tabs_or_port"
-            android:paddingEnd="55dp"
-            android:paddingStart="55dp"
-            android:layout_marginTop="32dp"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:text="@string/save">
         </Button>
     </RelativeLayout>
 </FrameLayout>

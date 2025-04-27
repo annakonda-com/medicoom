@@ -6,7 +6,9 @@
     android:background="@drawable/outlined_rounded_rect"
     android:layout_below="@+id/num_of_tablets_layout"
     android:layout_marginTop="4dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clickable="true"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/input_time"

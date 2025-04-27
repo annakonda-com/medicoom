@@ -276,53 +276,42 @@
                         android:id="@+id/days_of_week"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/by_week"
-                        android:layout_centerHorizontal="true"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
                         android:visibility="gone"
                         tools:visibility="visible">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/monday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/monday" />
+                            android:text="@string/monday"
+                            style="@style/chip_item" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/tuesday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/chip_item"
                             android:text="@string/tuesday" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/wednesday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/chip_item"
                             android:text="@string/wednesday" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/thursday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/chip_item"
                             android:text="@string/thursday" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/friday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/chip_item"
                             android:text="@string/friday" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/saturday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/chip_item"
                             android:text="@string/saturday" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/sunday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/chip_item"
                             android:text="@string/sunday" />
                     </com.google.android.material.chip.ChipGroup>
 
@@ -456,13 +445,12 @@
 
                 <Button
                     android:id="@+id/save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_below="@id/send_notific"
                     android:layout_centerHorizontal="true"
-                    android:paddingStart="55dp"
-                    android:paddingEnd="55dp"
-                    android:text="@string/save" />
+                    android:layout_marginBottom="150dp"
+                    style="@style/save_button"
+                    android:text="@string/save"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>

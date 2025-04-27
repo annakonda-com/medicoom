@@ -48,7 +48,7 @@ public class InputAppointmentFragment extends Fragment {
     final String FAKE_ID = "AddNewMed";
 
     public ArrayList<Integer> times = new ArrayList<>();
-    SimpleDateFormat timeFormat = new SimpleDateFormat("H:m", Locale.getDefault());
+    SimpleDateFormat timeFormat = new SimpleDateFormat("H:mm", Locale.getDefault());
 
     MedicinePost picked_med;
 
@@ -64,6 +64,13 @@ public class InputAppointmentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        View.OnClickListener timeClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimeDialog(v.findViewById(R.id.input_time));
+            }
+        };
         Toolbar my_toolbar = view.findViewById(R.id.my_toolbar);
         my_toolbar.setNavigationIcon(R.drawable.arrow_back);
         my_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -77,40 +84,33 @@ public class InputAppointmentFragment extends Fragment {
         how_much_a_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-                if (times != null){
+                if (times != null) {
                     times.clear();
                 }
                 LinearLayout container = view.findViewById(R.id.times_inputs_container);
-                for (int i = 0; i < container.getChildCount(); i++){
+                for (int i = 0; i < container.getChildCount(); i++) {
                     container.getChildAt(i).setVisibility(View.GONE);
                 }
-
-                for (int i = 0; i <= position; i++){
+                for (int i = 0; i <= position; i++) {
                     View curr_inp = container.getChildAt(i);
                     curr_inp.setVisibility(View.VISIBLE);
                     String start_text = getString(R.string.time_of_get) + " " + (i + 1);
                     ((TextView) curr_inp.findViewById(R.id.input_time)).setText(start_text);
-                    curr_inp.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            showTimeDialog(curr_inp.findViewById(R.id.input_time));
-                        }
-                    });
+                    curr_inp.setOnClickListener(timeClickListener);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
+
 
         RadioButton not_forever = view.findViewById(R.id.not_forever);
         not_forever.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 View overallview = view.findViewById(R.id.overall_duration_layout);
-                if (isChecked){
+                if (isChecked) {
                     overallview.animate().alpha(1.0f);
                     overallview.setVisibility(View.VISIBLE);
                 } else {
@@ -125,7 +125,7 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 View days = view.findViewById(R.id.days_of_week);
-                if (isChecked){
+                if (isChecked) {
                     days.animate().alpha(1.0f);
                     days.setVisibility(View.VISIBLE);
                 } else {
@@ -139,7 +139,7 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 View days = view.findViewById(R.id.for_how_much_days_layout);
-                if (isChecked){
+                if (isChecked) {
                     days.animate().alpha(1.0f);
                     days.setVisibility(View.VISIBLE);
                 } else {
@@ -153,7 +153,7 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 View how_to_get_layout = view.findViewById(R.id.how_to_get_layout);
-                if (isChecked){
+                if (isChecked) {
                     how_to_get_layout.animate().alpha(1.0f);
                     how_to_get_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -168,6 +168,8 @@ public class InputAppointmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_input_appointment, container, false);
+        ((RadioButton) contentView.findViewById(R.id.forever)).setChecked(true);
+        ((RadioButton) contentView.findViewById(R.id.every_day)).setChecked(true);
 
         ArrayList<MedicinePost> med_list = new ArrayList<>();
         MedicineSpinnerAdapter adapter = new MedicineSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, med_list);
@@ -178,7 +180,7 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 MedicinePost curr_med = adapter.getItem(position);
-                if (curr_med.getPostId() != null && curr_med.getPostId().equals(FAKE_ID)){
+                if (curr_med.getPostId() != null && curr_med.getPostId().equals(FAKE_ID)) {
                     InputMedicineFragment chfr = new InputMedicineFragment();
 
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -235,7 +237,7 @@ public class InputAppointmentFragment extends Fragment {
         how_much_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ((Spinner) contentView.findViewById(R.id.how_much_a_day)).setAdapter(how_much_adapter);
 
-        
+
         return contentView;
     }
 
@@ -248,16 +250,11 @@ public class InputAppointmentFragment extends Fragment {
                 view.setText(timeFormat.format(res.getTime()));
             }
         };
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar c = Calendar.getInstance();
-                new TimePickerDialog(getContext(), timeListener,
-                        c.get(Calendar.HOUR_OF_DAY),
-                        c.get(Calendar.MINUTE), true)
-                        .show();
-            }
-        });
+        Calendar c = Calendar.getInstance();
+        new TimePickerDialog(getContext(), timeListener,
+                c.get(Calendar.HOUR_OF_DAY),
+                c.get(Calendar.MINUTE), true)
+                .show();
 
     }
 }
