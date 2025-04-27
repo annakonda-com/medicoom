@@ -1,5 +1,6 @@
 package com.medicoom.fragments;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,8 +20,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -36,6 +40,7 @@ import com.medicoom.R;
 import com.medicoom.javaClasses.Medicine;
 import com.medicoom.javaClasses.MedicinePost;
 import com.medicoom.javaClasses.MedicineSpinnerAdapter;
+import com.medicoom.utils.myUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,23 +52,33 @@ public class InputAppointmentFragment extends Fragment {
     final String FULL_SCREEN = "full_screen";
     final String FAKE_ID = "AddNewMed";
 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
+    public int startDate = -1;
+
     public ArrayList<Integer> times = new ArrayList<>();
     SimpleDateFormat timeFormat = new SimpleDateFormat("H:mm", Locale.getDefault());
 
     MedicinePost picked_med;
+
+
 
     public InputAppointmentFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.input_date_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCalendarDialog(view.findViewById(R.id.input_date));
+            }
+        });
 
         View.OnClickListener timeClickListener = new View.OnClickListener() {
             @Override
@@ -99,6 +114,7 @@ public class InputAppointmentFragment extends Fragment {
                     curr_inp.setOnClickListener(timeClickListener);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -241,6 +257,24 @@ public class InputAppointmentFragment extends Fragment {
         return contentView;
     }
 
+    void showCalendarDialog(TextView myview) {
+        DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker v, int year, int monthOfYear, int dayOfMonth) {
+                Calendar loc_startDate = Calendar.getInstance();
+                loc_startDate.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
+                myview.setText(dateFormat.format(loc_startDate.getTime()));
+                startDate = (int) (loc_startDate.getTimeInMillis() / 1000L);
+            }
+        };
+
+        Calendar c = Calendar.getInstance();
+        new DatePickerDialog(getActivity(), dateListener,
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
     void showTimeDialog(TextView view) {
         TimePickerDialog.OnTimeSetListener timeListener = new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker v, int hourOfDay, int minute) {
@@ -256,5 +290,31 @@ public class InputAppointmentFragment extends Fragment {
                 c.get(Calendar.MINUTE), true)
                 .show();
 
+    }
+
+    void makePost(View view) {
+
+    }
+    boolean validateForm(View view){
+        boolean valid = true;
+        if (((RadioButton) view.findViewById(R.id.not_forever)).isChecked()){
+            EditText overall_duration = view.findViewById(R.id.overall_duration);
+            if (overall_duration.getText().toString().isEmpty()) {
+                overall_duration.setError("Обязательное поле");
+                valid = false;
+            } else {
+                if (myUtils.isSpace(overall_duration.getText().toString())) {
+                    overall_duration.setError("Поле пустое");
+                    valid = false;
+                } else {
+                    overall_duration.setError(null);
+                }
+            }
+        }
+        if (((RadioButton) view.findViewById(R.id.by_week)).isChecked()){
+
+        }
+
+        if
     }
 }
