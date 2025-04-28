@@ -27,9 +27,10 @@
             android:layout_height="match_parent"
             android:layout_below="@id/my_toolbar">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/choose_farmacy"
@@ -44,7 +45,6 @@
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_below="@id/choose_farmacy"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
@@ -54,7 +54,6 @@
                     android:id="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/spinner"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />
 
@@ -62,7 +61,6 @@
                     android:id="@+id/input_date_layout"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_below="@+id/divider"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/outlined_rounded_rect">
@@ -90,7 +88,6 @@
                     android:id="@+id/text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/input_date_layout"
                     android:layout_margin="8dp"
                     android:text="@string/how_long_to_get"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
@@ -98,8 +95,7 @@
                 <RadioGroup
                     android:id="@+id/how_long"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_view">
+                    android:layout_height="wrap_content">
 
                     <RadioButton
                         android:id="@+id/forever"
@@ -123,7 +119,6 @@
                     android:id="@+id/overall_duration_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/how_long"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:hint="@string/overall_duration"
@@ -140,7 +135,6 @@
                     android:id="@+id/divider1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/overall_duration_layout"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />
 
@@ -148,7 +142,6 @@
                     android:id="@+id/text_view1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/divider1"
                     android:layout_marginStart="8dp"
                     android:text="@string/how_much_a_day"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
@@ -157,7 +150,6 @@
                     android:id="@+id/how_much_a_day"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_below="@id/text_view1"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
@@ -167,7 +159,6 @@
                     android:id="@+id/times_inputs_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/how_much_a_day"
                     android:orientation="vertical">
 
                     <include
@@ -235,7 +226,6 @@
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/times_inputs_container"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />
 
@@ -243,7 +233,6 @@
                     android:id="@+id/text_view2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/divider2"
                     android:layout_marginStart="8dp"
                     android:text="@string/graphic"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
@@ -251,8 +240,7 @@
                 <RadioGroup
                     android:id="@+id/graphic_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/text_view2">
+                    android:layout_height="wrap_content">
 
                     <RadioButton
                         android:id="@+id/every_day"
@@ -346,7 +334,6 @@
                     android:id="@+id/divider3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/graphic_layout"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />
 
@@ -354,7 +341,6 @@
                     android:id="@+id/text_view3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/divider3"
                     android:layout_marginStart="8dp"
                     android:text="@string/how_to_get"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
@@ -362,8 +348,7 @@
                 <RadioGroup
                     android:id="@+id/how_get_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/text_view3">
+                    android:layout_height="wrap_content">
 
                     <RadioButton
                         android:id="@+id/before"
@@ -413,14 +398,12 @@
                     android:id="@+id/divider4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/how_get_layout"
                     android:layout_marginTop="8dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/num_of_tablets_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/divider4"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:hint="@string/num_of_tablets_at_once"
@@ -438,20 +421,18 @@
                     android:id="@+id/send_notific"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/num_of_tablets_layout"
                     android:layout_marginStart="8dp"
                     android:text="@string/send_notific"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
                 <Button
                     android:id="@+id/save"
-                    android:layout_below="@id/send_notific"
-                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="150dp"
                     style="@style/save_button"
                     android:text="@string/save"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-            </RelativeLayout>
+            </LinearLayout>
         </ScrollView>
     </RelativeLayout>
 </FrameLayout>
