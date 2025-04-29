@@ -101,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
                 public void handleOnBackPressed() {
                     List<Fragment> fragments = getSupportFragmentManager().getFragments();
                     Fragment last_fragment = fragments.get(fragments.size() - 1);
-                    Log.d("MAYTAG", "------");
+                    /* Log.d("MAYTAG", "------");
                     for(Fragment x: getSupportFragmentManager().getFragments()){
                         Log.d("MAYTAG", x.toString());
                     }
-                    Log.d("MAYTAG", "------");
+                    Log.d("MAYTAG", "------"); */
 
                     if (last_fragment.getTag().equals(FULL_SCREEN)) {
                         getSupportFragmentManager().popBackStack();
@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         Fragment current_fragment = getSupportFragmentManager().findFragmentByTag("main_fragment");
         Toolbar tlbr = findViewById(R.id.my_toolbar);
         if (current_fragment != null){

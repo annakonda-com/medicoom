@@ -2,11 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_dont_remind"
-        android:title="@string/dont_remind" />
-    <item
-        android:id="@+id/action_pause"
-        android:title="@string/pause" />
+        android:id="@+id/action_continue"
+        android:title="@string/continue_get" />
     <item
         android:id="@+id/action_to_archive"
         android:title="@string/to_archive" />

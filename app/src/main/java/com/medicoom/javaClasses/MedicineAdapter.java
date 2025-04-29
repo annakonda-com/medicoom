@@ -40,8 +40,6 @@ public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.medicine_item, null);
         }
-        Log.d("TAG", med.toString());
-        Log.d("TAG", Integer.toString(med.good_until));
         ((TextView) convertView.findViewById(R.id.medicine_dosage)).setVisibility(View.GONE);
         ((TextView) convertView.findViewById(R.id.medicine_num_of_tablets)).setVisibility(View.GONE);
         ((TextView) convertView.findViewById(R.id.medicine_good_until)).setVisibility(View.GONE);

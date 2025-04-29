@@ -67,5 +67,7 @@
     <string name="personal">Свой вариант</string>
     <string name="num_of_tablets_at_once">Количество таблеток или порций за 1 приём</string>
     <string name="send_notific">Присылать уведомления о приёме</string>
+    <string name="continue_get">Продолжить</string>
+    <string name="restart">Возобновить</string>
 
 </resources>

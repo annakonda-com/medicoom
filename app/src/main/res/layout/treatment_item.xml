@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/rounded_rect"
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/today_name"
+        android:id="@+id/appointment_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -17,13 +18,21 @@
         tools:text="Витамин D" />
 
     <TextView
-        android:id="@+id/today_description"
+        android:id="@+id/appointment_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/today_name"
+        android:layout_below="@+id/appointment_name"
         android:layout_marginStart="12dp"
         android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
         android:textColor="@color/md_theme_onSurfaceVariant"
         tools:text="2 таблетки, после еды" />
+    <ImageView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/menu_btn">
+    </ImageView>
 
 </RelativeLayout>
