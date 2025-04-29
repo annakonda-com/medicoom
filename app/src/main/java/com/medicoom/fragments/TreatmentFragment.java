@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
@@ -33,10 +34,12 @@ import com.medicoom.javaClasses.MedicinePost;
 import com.medicoom.javaClasses.MedicineSpinnerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TreatmentFragment extends Fragment {
     final String FULL_SCREEN = "full_screen";
+    final String MAIN_FRAGMENT = "main_fragment";
 
     public TreatmentFragment() {
         // Required empty public constructor
@@ -56,6 +59,33 @@ public class TreatmentFragment extends Fragment {
                 ft.commit();
             }
         });
+        MaterialButtonToggleGroup switch_btn = view.findViewById(R.id.toggleButton);
+        switch_btn.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (switch_btn.getCheckedButtonId() == R.id.active) {
+                    ActiveTreatmentFragment inpfr = new ActiveTreatmentFragment();
+                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    if (!getChildFragmentManager().getFragments().isEmpty()) {
+                        ft.remove(getChildFragmentManager().getFragments().get((getChildFragmentManager().getFragments()).size() - 1));
+                    }
+                    ft.replace(R.id.sub_fragment, inpfr, MAIN_FRAGMENT);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                } else if (checkedId == R.id.archive){
+                    ArchiveTreatmentFragment inpfr = new ArchiveTreatmentFragment();
+                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    if (!getChildFragmentManager().getFragments().isEmpty()) {
+                        ft.remove(getChildFragmentManager().getFragments().get((getChildFragmentManager().getFragments()).size() - 1));
+                    }
+                    ft.replace(R.id.sub_fragment, inpfr, MAIN_FRAGMENT);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            }
+        });
     }
 
     @Override
@@ -66,42 +96,6 @@ public class TreatmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_treatment, container, false);
-        ListView listView = contentView.findViewById(R.id.appointments_list);
-        ArrayList<AppointementPost> app_list = new ArrayList<>();
-        AppointmentAdapter listAdapter = new AppointmentAdapter(getActivity(), app_list);
-        listView.setAdapter(listAdapter);
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance
-                        ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("users" + "/" + currentUser.getUid() + "/appointments");
-        ValueEventListener medListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!app_list.isEmpty()) {
-                    app_list.clear();
-                }
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Appointment med = ds.getValue(Appointment.class);
-                    if (med != null) {
-                        AppointementPost appWithId = new AppointementPost(med.getAmount_at_once(),
-                                med.isArchive(), med.getDays(), med.getDays_of_week(),
-                                med.isDeleted(), med.getEvery_x_days(), med.getHow_to_get(),
-                                med.getMedicine_id(), med.isNotifications(), med.isOn_pause(),
-                                med.getStart_date(), med.getTimes(), ds.getKey());
-                        app_list.add(appWithId);
-                    }
-                }
-                listAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("Firebase", "loadMedicine:onCancelled", databaseError.toException());
-            }
-        };
-        mDatabase.addValueEventListener(medListener);
-        return contentView;
+        return inflater.inflate(R.layout.fragment_treatment, container, false);
     }
 }

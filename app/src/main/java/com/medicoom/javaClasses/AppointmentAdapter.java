@@ -69,17 +69,16 @@ public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
         convertView.findViewById(R.id.menu_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(v);
+                showMenu(v, R.menu.default_treatment_menu);
             }
         });
-
 
         return convertView;
     }
 
-    void showMenu(View v) {
+    void showMenu(View v, int menu) {
         PopupMenu popupMenu = new PopupMenu(getContext(), v);
-        popupMenu.getMenuInflater().inflate(R.menu.default_treatment_menu, popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(menu, popupMenu.getMenu());
         popupMenu.show();
     }
 

@@ -18,7 +18,8 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
             app:checkedButton="@+id/active"
-            app:singleSelection="true">
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
             <Button
                 android:id="@+id/active"
@@ -35,18 +36,10 @@
                 android:text="@string/archive" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
-        <ListView android:layout_width="match_parent"
+        <FrameLayout android:id="@+id/sub_fragment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/appointments_list"
-            android:layout_below="@+id/toggleButton"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:divider="@null"
-            android:dividerHeight="8dp"
-            android:paddingBottom="90dp"
-            android:animateLayoutChanges="true">
-        </ListView>
+            android:layout_below="@+id/toggleButton"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_treatment"
