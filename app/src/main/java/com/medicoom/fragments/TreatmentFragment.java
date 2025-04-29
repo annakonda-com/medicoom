@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -96,6 +97,12 @@ public class TreatmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ActiveTreatmentFragment inpfr = new ActiveTreatmentFragment();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.replace(R.id.sub_fragment, inpfr, MAIN_FRAGMENT);
+        ft.addToBackStack(null);
+        ft.commit();
         return inflater.inflate(R.layout.fragment_treatment, container, false);
     }
 }

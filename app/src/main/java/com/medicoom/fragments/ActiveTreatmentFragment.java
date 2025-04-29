@@ -63,7 +63,9 @@ public class ActiveTreatmentFragment extends Fragment {
                                 med.isDeleted(), med.getEvery_x_days(), med.getHow_to_get(),
                                 med.getMedicine_id(), med.isNotifications(), med.isOn_pause(),
                                 med.getStart_date(), med.getTimes(), ds.getKey());
-                        app_list.add(appWithId);
+                        if (!appWithId.isDeleted()){
+                            app_list.add(appWithId);
+                        }
                     }
                 }
                 listAdapter.notifyDataSetChanged();
@@ -74,7 +76,7 @@ public class ActiveTreatmentFragment extends Fragment {
                 Log.e("Firebase", "loadMedicine:onCancelled", databaseError.toException());
             }
         };
-        mDatabase.addValueEventListener(medListener);
+        mDatabase.orderByChild("archive").equalTo(false).addValueEventListener(medListener);
         return contentView;
     }
 }

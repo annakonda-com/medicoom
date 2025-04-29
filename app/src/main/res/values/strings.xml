@@ -29,9 +29,11 @@
     <string name="tablets_or_portions">таблеток или порций</string>
     <string name="save">Сохранить</string>
     <string name="you_want_med">Вы точно хотите удалить лекарство?</string>
+    <string name="you_want_app">Вы точно хотите перестать принимать лекарство и УДАЛИТЬ назначение?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="med_delete">Удаление лекарства</string>
+    <string name="app_delete">Удаление назначения</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="remove_date">Убрать срок годности</string>
     <string name="active">Активное</string>

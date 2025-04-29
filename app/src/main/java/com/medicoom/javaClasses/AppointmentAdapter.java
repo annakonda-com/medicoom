@@ -1,8 +1,11 @@
 package com.medicoom.javaClasses;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -69,17 +73,73 @@ public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
         convertView.findViewById(R.id.menu_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(v, R.menu.default_treatment_menu);
+                if (curr_app.isArchive()){
+                    showMenu(v, R.menu.in_archive_treatment_menu, curr_app);
+                } else if (curr_app.isOn_pause()){
+                    showMenu(v, R.menu.on_pause_treatment_menu, curr_app);
+                } else {
+                    showMenu(v, R.menu.default_treatment_menu, curr_app);
+                }
             }
         });
 
         return convertView;
     }
 
-    void showMenu(View v, int menu) {
+    void showMenu(View v, int menu, AppointementPost curr_app) {
         PopupMenu popupMenu = new PopupMenu(getContext(), v);
         popupMenu.getMenuInflater().inflate(menu, popupMenu.getMenu());
         popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_dont_remind){
+                    curr_app.setNotifications(false);
+                }
+                if (item.getItemId() == R.id.action_pause){
+                    curr_app.setOn_pause(true);
+                }
+                if (item.getItemId() == R.id.action_continue){
+                    curr_app.setOn_pause(false);
+                }
+                if (item.getItemId() == R.id.action_to_archive){
+                    curr_app.setArchive(true);
+                }
+                if (item.getItemId() == R.id.action_restart_get){
+                    curr_app.setArchive(false);
+                }
+                if (item.getItemId() == R.id.action_stop_get){
+                    curr_app.setDeleted(true);
+                    /*DialogInterface.OnClickListener yesListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            curr_app.setDeleted(true);
+                        }
+                    };*/
+                    /*new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.app_delete)
+                            .setMessage(R.string.you_want_app)
+                            .setPositiveButton(R.string.yes, yesListener)
+                            .setNegativeButton(R.string.no, null)
+                            .show();*/
+
+                }
+                Appointment res_app = new Appointment(curr_app.getAmount_at_once(),
+                        curr_app.isArchive(), curr_app.getDays(), curr_app.days_of_week,
+                        curr_app.isDeleted(), curr_app.every_x_days, curr_app.getHow_to_get(),
+                        curr_app.getMedicine_id(), curr_app.isNotifications(), curr_app.isOn_pause(),
+                        curr_app.getStart_date(), curr_app.getTimes());
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance
+                                ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
+                        .getReference("users" + "/" + currentUser.getUid());
+                mDatabase.child("appointments").child(curr_app.getPost_id())
+                        .setValue(res_app).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {}});
+                return false;
+            }
+        });
     }
 
 }

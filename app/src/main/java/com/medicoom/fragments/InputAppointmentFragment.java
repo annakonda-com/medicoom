@@ -91,6 +91,8 @@ public class InputAppointmentFragment extends Fragment {
         RadioButton at_some_of_days;
         RadioButton personal;
 
+        ((CheckBox) view.findViewById(R.id.send_notific)).setChecked(true);
+
         view.findViewById(R.id.input_date_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
