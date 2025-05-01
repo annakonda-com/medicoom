@@ -1,5 +1,7 @@
 package com.medicoom.javaClasses;
 
+import static com.medicoom.utils.myUtils.dateFormat;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -66,11 +68,10 @@ public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
             }
         }
         if (med.good_until != -1) {
-            SimpleDateFormat formater = new SimpleDateFormat("dd.MM.yy", Locale.UK);
             long dat = med.good_until * 1000L;
             Date date = new Date(dat);
             ((TextView) convertView.findViewById(R.id.medicine_good_until)).setVisibility(View.VISIBLE);
-            ((TextView) convertView.findViewById(R.id.medicine_good_until)).setText(formater.format(date));
+            ((TextView) convertView.findViewById(R.id.medicine_good_until)).setText(dateFormat.format(date));
             Date now = new Date();
             dat = dat - (24 * 7 * 60 * 60 * 1000);
             Date warning_time = new Date(dat);

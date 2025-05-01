@@ -13,6 +13,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar"
             style="@style/toolbar"
+            android:layout_gravity="top"
+            android:gravity="center_vertical"
             app:menu="@menu/toolbar"
             app:title="@string/today" />
 

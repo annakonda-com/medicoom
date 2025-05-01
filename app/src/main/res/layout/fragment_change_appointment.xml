@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_inverseOnSurface"
+    tools:context=".fragments.InputAppointmentFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
+            android:background="@color/md_theme_surface"
+            app:title="Назначение"
+            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+            app:titleTextColor="@color/md_theme_onSurface" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_toolbar"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/you_are_getting_med"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+            <TextView
+                android:id="@+id/med_name"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/outlined_rounded_rect"
+                android:gravity="center|start"
+                android:padding="16dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/md_theme_onSurface"
+                tools:text="Парацетамол" />
+
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/outlined_rounded_rect"
+                android:gravity="center|start"
+                android:padding="16dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/md_theme_onSurface"
+                tools:text="c 20.04.25" />
+
+            <TextView
+                android:id="@+id/rest_to_get"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/outlined_rounded_rect"
+                android:gravity="center|start"
+                android:padding="16dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="Осталось принимать ещё 20 дней" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+
+            <TextView
+                android:id="@+id/you_are_getting_it"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="Вы принимаете это лекарство 3 раза в день" />
+
+            <LinearLayout
+                android:id="@+id/times_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="32dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/time1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone"
+                    tools:text="в 12:30"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/time2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone"
+                    tools:text="в 14:30"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/time3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/graphic"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+            <TextView
+                android:id="@+id/graphic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Понедельник, вторник, среда" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/how_to_get"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="Принимать нужно до еды" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

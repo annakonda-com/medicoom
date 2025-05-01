@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/md_theme_surface"
-            android:gravity="top"
+            android:layout_gravity="top"
             app:title="Лекарство"
             app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             app:titleTextColor="@color/md_theme_onSurface" />

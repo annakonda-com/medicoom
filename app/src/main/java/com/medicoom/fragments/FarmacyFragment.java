@@ -117,6 +117,7 @@ public class FarmacyFragment extends Fragment {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.replace(R.id.main, chfr, FULL_SCREEN);
+                ft.remove(FarmacyFragment.this);
                 ft.addToBackStack(null);
                 ft.commit();
             }

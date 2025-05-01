@@ -1,15 +1,12 @@
 package com.medicoom.utils;
 
-import android.app.Activity;
-import android.view.View;
-
-import androidx.appcompat.widget.Toolbar;
-
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.medicoom.R;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class myUtils {
+    public static  SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
+    public static SimpleDateFormat timeFormat = new SimpleDateFormat("H:mm", Locale.getDefault());
+
     public static boolean isSpace(String str) {
         String[] myStr = str.split("");
         boolean res = true;

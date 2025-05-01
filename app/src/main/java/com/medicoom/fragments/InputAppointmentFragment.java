@@ -1,5 +1,8 @@
 package com.medicoom.fragments;
 
+import static com.medicoom.utils.myUtils.dateFormat;
+import static com.medicoom.utils.myUtils.timeFormat;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -61,17 +64,15 @@ import java.util.Locale;
 public class InputAppointmentFragment extends Fragment {
     final String FULL_SCREEN = "full_screen";
     final String FAKE_ID = "AddNewMed";
-
-    SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
     public int startDate = -1;
 
     public ArrayList<Integer> times = new ArrayList<>();
-    SimpleDateFormat timeFormat = new SimpleDateFormat("H:mm", Locale.getDefault());
 
     MedicinePost picked_med;
     String how_to_get_str = null;
 
     int num_of_times = 1;
+    int every_x_days = -1;
 
 
     public InputAppointmentFragment() {
@@ -396,7 +397,6 @@ public class InputAppointmentFragment extends Fragment {
 
             List<Integer> final_times = times;
 
-            int every_x_days = -1;
             String ddays = ((EditText) view.findViewById(R.id.for_how_much_days)).getText().toString();
             if (!ddays.isEmpty()) {
                 every_x_days = Integer.parseInt(ddays);
@@ -462,6 +462,10 @@ public class InputAppointmentFragment extends Fragment {
                 how_to_get_str = how_to_get.getText().toString();
                 how_to_get.setError(null);
             }
+        }
+
+        if(((RadioButton) view.findViewById(R.id.every_day)).isChecked()){
+            every_x_days = 1;
         }
 
         while (times.size() < num_of_times) {

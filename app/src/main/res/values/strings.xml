@@ -71,5 +71,8 @@
     <string name="send_notific">Присылать уведомления о приёме</string>
     <string name="continue_get">Продолжить</string>
     <string name="restart">Возобновить</string>
+    <string name="you_are_getting_med">Вы принимаете лекарство:</string>
+    <string name="rest_to_get">Осталось принимать ещё</string>
+    <string name="on_pause_description">Поставить на паузу (не присылать уведомления и не показывать на главном экране)</string>
 
 </resources>

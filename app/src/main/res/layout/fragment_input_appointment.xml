@@ -16,8 +16,8 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
             android:background="@color/md_theme_surface"
-            android:gravity="top"
             app:title="Назначение"
             app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             app:titleTextColor="@color/md_theme_onSurface" />
@@ -128,7 +128,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/overall_duration"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.divider.MaterialDivider
@@ -269,8 +270,8 @@
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/monday"
-                            android:text="@string/monday"
-                            style="@style/chip_item" />
+                            style="@style/chip_item"
+                            android:text="@string/monday" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/tuesday"
@@ -427,9 +428,9 @@
 
                 <Button
                     android:id="@+id/save"
+                    style="@style/save_button"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="150dp"
-                    style="@style/save_button"
                     android:text="@string/save"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
             </LinearLayout>

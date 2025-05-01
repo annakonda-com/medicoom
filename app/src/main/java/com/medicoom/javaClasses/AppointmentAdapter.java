@@ -1,5 +1,7 @@
 package com.medicoom.javaClasses;
 
+import static com.medicoom.utils.myUtils.dateFormat;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,7 +32,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
 
     public AppointmentAdapter(Context context, ArrayList<AppointementPost> arr) {
         super(context, R.layout.treatment_item, arr);
@@ -45,8 +46,6 @@ public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.treatment_item, null);
         }
         TextView name = convertView.findViewById(R.id.appointment_name);
-
-        Log.d("MAYTAG", curr_app.getMedicine_id());
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance
@@ -141,5 +140,4 @@ public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
             }
         });
     }
-
 }

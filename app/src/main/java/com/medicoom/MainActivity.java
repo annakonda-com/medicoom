@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (last_fragment.getTag().equals(FULL_SCREEN)) {
                         getSupportFragmentManager().popBackStack();
+
                     } else if (last_fragment instanceof MainFragment) {
                         finish();
                     } else if (last_fragment.getTag().equals(MAIN_FRAGMENT)) {
@@ -131,17 +132,17 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Fragment current_fragment = getSupportFragmentManager().findFragmentByTag("main_fragment");
         Toolbar tlbr = findViewById(R.id.my_toolbar);
-        if (current_fragment != null){
-            if (current_fragment instanceof MainFragment){
+        if (current_fragment != null) {
+            if (current_fragment instanceof MainFragment) {
                 tlbr.setTitle(R.string.today);
-            } else if (current_fragment instanceof  FarmacyFragment){
+            } else if (current_fragment instanceof FarmacyFragment) {
                 tlbr.setTitle(R.string.farmacy);
-            } else if (current_fragment instanceof TreatmentFragment){
+            } else if (current_fragment instanceof TreatmentFragment) {
                 tlbr.setTitle(R.string.treatment);
-            } else if (current_fragment instanceof HistoryFragment){
+            } else if (current_fragment instanceof HistoryFragment) {
                 tlbr.setTitle(R.string.history);
             }
-        }else{
+        } else {
             tlbr.setTitle(R.string.today);
             MainFragment fr = new MainFragment();
             setMainFragments(fr);

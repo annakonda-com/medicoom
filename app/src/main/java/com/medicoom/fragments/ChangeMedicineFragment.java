@@ -1,5 +1,7 @@
 package com.medicoom.fragments;
 
+import static com.medicoom.utils.myUtils.dateFormat;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
@@ -39,7 +41,6 @@ import java.util.Locale;
 
 public class ChangeMedicineFragment extends Fragment {
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy", Locale.getDefault());
     public int startDate = -1;
     public int int_num_of_tablets = -1;
     public int int_remind_when = -1;
