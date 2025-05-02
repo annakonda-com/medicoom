@@ -56,7 +56,8 @@ public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Medicine med = dataSnapshot.getValue(Medicine.class);
-                        name.setText(med.getName());
+                        String appointment_name = med.getName() + " " + med.getDosage();
+                        name.setText(appointment_name);
                     }
 
                     @Override

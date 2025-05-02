@@ -1,0 +1,90 @@
+package com.medicoom.javaClasses;
+
+public class AppointmentOnDate {
+    String med_name_and_dosage;
+    int rest_to_get;
+    String med_id;
+    String appointment_id;
+    boolean is_forever;
+    String comment;
+    boolean is_got;
+
+    public AppointmentOnDate(String med_name_and_dosage,
+                             int rest_to_get, String med_id, String appointment_id,
+                             boolean is_forever, String comment, boolean is_got) {
+        this.med_name_and_dosage = med_name_and_dosage;
+        this.rest_to_get = rest_to_get;
+        this.med_id = med_id;
+        this.appointment_id = appointment_id;
+        this.is_forever = is_forever;
+        this.comment = comment;
+        this.is_got = is_got;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public boolean isIs_got() {
+        return is_got;
+    }
+
+    public void setIs_got(boolean is_got) {
+        this.is_got = is_got;
+    }
+
+    public String getMed_name_and_dosage() {
+        return med_name_and_dosage;
+    }
+
+    public void setMed_name_and_dosage(String med_name_and_dosage) {
+        this.med_name_and_dosage = med_name_and_dosage;
+    }
+
+    public int getRest_to_get() {
+        return rest_to_get;
+    }
+
+    public void setRest_to_get(int rest_to_get) {
+        this.rest_to_get = rest_to_get;
+    }
+
+    public String getMed_id() {
+        return med_id;
+    }
+
+    public void setMed_id(String med_id) {
+        this.med_id = med_id;
+    }
+
+    public String getAppointment_id() {
+        return appointment_id;
+    }
+
+    public void setAppointment_id(String appointment_id) {
+        this.appointment_id = appointment_id;
+    }
+
+    public boolean isIs_forever() {
+        return is_forever;
+    }
+
+    public void setIs_forever(boolean is_forever) {
+        this.is_forever = is_forever;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentOnDate{" +
+                "med_name_and_dosage='" + med_name_and_dosage + '\'' +
+                ", rest_to_get=" + rest_to_get +
+                ", med_id='" + med_id + '\'' +
+                ", appointment_id='" + appointment_id + '\'' +
+                ", is_forever=" + is_forever +
+                '}';
+    }
+}
