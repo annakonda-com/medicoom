@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.medicoom.fragments.FarmacyFragment;
 import com.medicoom.fragments.HistoryFragment;
 import com.medicoom.fragments.MainFragment;
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) {
@@ -90,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
             });
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseDatabase.getInstance
+                            ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
+                    .getReference("users" + "/" + currentUser.getUid()).keepSynced(true);
             /*if (getSupportFragmentManager().getFragments().isEmpty()) {
                 Toolbar tlbr = findViewById(R.id.my_toolbar);
                 tlbr.setTitle(R.string.today);

@@ -8,6 +8,7 @@ public class AppointmentOnDate {
     boolean is_forever;
     String comment;
     boolean is_got;
+    String post_id;
 
     public AppointmentOnDate(String med_name_and_dosage,
                              int rest_to_get, String med_id, String appointment_id,
@@ -19,6 +20,17 @@ public class AppointmentOnDate {
         this.is_forever = is_forever;
         this.comment = comment;
         this.is_got = is_got;
+    }
+
+    public AppointmentOnDate() {
+    }
+
+    public String getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
     }
 
     public String getComment() {
@@ -80,11 +92,13 @@ public class AppointmentOnDate {
     @Override
     public String toString() {
         return "AppointmentOnDate{" +
-                "med_name_and_dosage='" + med_name_and_dosage + '\'' +
+                "appointment_id='" + appointment_id + '\'' +
+                ", med_name_and_dosage='" + med_name_and_dosage + '\'' +
                 ", rest_to_get=" + rest_to_get +
                 ", med_id='" + med_id + '\'' +
-                ", appointment_id='" + appointment_id + '\'' +
                 ", is_forever=" + is_forever +
+                ", comment='" + comment + '\'' +
+                ", is_got=" + is_got +
                 '}';
     }
 }
