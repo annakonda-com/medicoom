@@ -174,11 +174,7 @@ public class ActiveTreatmentFragment extends Fragment {
                 Log.e("Firebase", "loadMedicine:onCancelled", databaseError.toException());
             }
         };
-        mDatabase.orderByChild("archive").
-
-                equalTo(false).
-
-                addValueEventListener(medListener);
+        mDatabase.orderByChild("archive").equalTo(false).addValueEventListener(medListener);
         return contentView;
     }
 }

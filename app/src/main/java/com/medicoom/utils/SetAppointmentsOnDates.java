@@ -47,18 +47,18 @@ public class SetAppointmentsOnDates implements Runnable {
                     AppointmentOnDate app = new AppointmentOnDate(med_name_dosage,
                             appointment.getDays() - i, appointment.getMedicine_id(),
                             appointment.getPost_id(), is_forever, null, false);
-                    writePost((int) startDate.getTimeInMillis() / 1000, time, app);
+                    writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                 }
                 startDate.add(Calendar.DATE, 1);
             }
-        } else if (appointment.getDays_of_week() != null) { // Принимать по дням недели
+        } else if (appointment.getDays_of_week() != null && !appointment.getDays_of_week().isEmpty()) { // Принимать по дням недели
             for (int i = 0; i < days; i++) {
                 if (isCorrectDayOfWeek(appointment.getDays_of_week(), startDate.get(Calendar.DAY_OF_WEEK))) {
                     for (int time : appointment.getTimes()) {
                         AppointmentOnDate app = new AppointmentOnDate(med_name_dosage,
                                 appointment.getDays() - i, appointment.getMedicine_id(),
                                 appointment.getPost_id(), is_forever, null, false);
-                        writePost((int) startDate.getTimeInMillis() / 1000, time, app);
+                        writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     }
                 }
                 startDate.add(Calendar.DATE, 1);
@@ -70,7 +70,7 @@ public class SetAppointmentsOnDates implements Runnable {
                     AppointmentOnDate app = new AppointmentOnDate(med_name_dosage,
                             appointment.getDays() - i, appointment.getMedicine_id(),
                             appointment.getPost_id(), is_forever, null, false);
-                    writePost((int) startDate.getTimeInMillis() / 1000, time, app);
+                    writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     startDate.add(Calendar.DATE, appointment.getEvery_x_days());
                     i += appointment.getEvery_x_days();
                 }
@@ -83,7 +83,7 @@ public class SetAppointmentsOnDates implements Runnable {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users" + "/" + currentUser.getUid() + "/appointments_on_dates");
-        mDatabase.child(String.valueOf(date)).child(String.valueOf(time)).setValue(new_app)
+        mDatabase.child(String.valueOf(date)).child(String.valueOf(time)).push().setValue(new_app)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

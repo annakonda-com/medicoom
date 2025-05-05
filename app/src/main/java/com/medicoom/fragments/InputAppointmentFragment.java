@@ -46,10 +46,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
+import com.medicoom.javaClasses.AppointementPost;
 import com.medicoom.javaClasses.Appointment;
 import com.medicoom.javaClasses.Medicine;
 import com.medicoom.javaClasses.MedicinePost;
 import com.medicoom.javaClasses.MedicineSpinnerAdapter;
+import com.medicoom.utils.SetAppointmentsOnDates;
 import com.medicoom.utils.myUtils;
 
 import java.lang.reflect.Array;
@@ -205,7 +207,7 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Appointment new_post = makePost(view);
-                if (makePost(view) != null){
+                if (makePost(view) != null) {
                     writePost(new_post);
                 }
             }
@@ -329,14 +331,24 @@ public class InputAppointmentFragment extends Fragment {
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users");
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase.child(currentUser.getUid()).child("appointments").push()
-                .setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity(), "Успешно добавлено!", Toast.LENGTH_LONG).show();
-                        getActivity().getSupportFragmentManager().popBackStack();
-                    }
-                });
+        DatabaseReference newPost = mDatabase.child(currentUser.getUid()).child("appointments")
+                .push();
+
+        newPost.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getActivity(), "Успешно добавлено!", Toast.LENGTH_LONG).show();
+                AppointementPost appWithId = new AppointementPost(post.getAmount_at_once(),
+                        post.isArchive(), post.getDays(), post.getDays_of_week(),
+                        post.isDeleted(), post.getEvery_x_days(), post.getHow_to_get(),
+                        post.getMedicine_id(), post.isNotifications(), post.isOn_pause(),
+                        post.getStart_date(), post.getTimes(), newPost.getKey());
+                Runnable createAppOnDates = new SetAppointmentsOnDates(appWithId);
+                Thread thread = new Thread(createAppOnDates);
+                thread.start();
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 
     Appointment makePost(View view) {
@@ -370,29 +382,27 @@ public class InputAppointmentFragment extends Fragment {
                 overall_duration = Integer.parseInt(ovll_duration);
             }
 
-            List<Integer> week_days_arr = null;
-            Integer[] raw_days = new Integer[8];
+            ArrayList<Integer> week_days_arr = new ArrayList<>();
             ChipGroup days_of_week = view.findViewById(R.id.days_of_week);
             List<Integer> selectedIds = days_of_week.getCheckedChipIds();
             if (!selectedIds.isEmpty()) {
                 for (int i = 0; i < selectedIds.size(); i++) {
                     if (selectedIds.get(i) == R.id.monday) {
-                        raw_days[i] = 0;
+                        week_days_arr.add(0);
                     } else if (selectedIds.get(i) == R.id.tuesday) {
-                        raw_days[i] = 1;
+                        week_days_arr.add(1);
                     } else if (selectedIds.get(i) == R.id.wednesday) {
-                        raw_days[i] = 2;
+                        week_days_arr.add(2);
                     } else if (selectedIds.get(i) == R.id.thursday) {
-                        raw_days[i] = 3;
+                        week_days_arr.add(3);
                     } else if (selectedIds.get(i) == R.id.friday) {
-                        raw_days[i] = 4;
+                        week_days_arr.add(4);
                     } else if (selectedIds.get(i) == R.id.saturday) {
-                        raw_days[i] = 5;
+                        week_days_arr.add(5);
                     } else if (selectedIds.get(i) == R.id.sunday) {
-                        raw_days[i] = 6;
+                        week_days_arr.add(6);
                     }
                 }
-                week_days_arr = Arrays.asList(raw_days);
             }
 
             List<Integer> final_times = times;
@@ -464,7 +474,7 @@ public class InputAppointmentFragment extends Fragment {
             }
         }
 
-        if(((RadioButton) view.findViewById(R.id.every_day)).isChecked()){
+        if (((RadioButton) view.findViewById(R.id.every_day)).isChecked()) {
             every_x_days = 1;
         }
 
