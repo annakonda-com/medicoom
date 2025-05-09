@@ -75,7 +75,19 @@ public class ChangeAppointmentFragment extends Fragment {
                 time_view.setVisibility(View.VISIBLE);
                 ((TextView) time_view).setText(text);
             }else{
-                String text = (i + 1) + ") " + timeFormat.format(times.get(i) * 1000L);
+                String hour;
+                String minute;
+                if (times.get(i) / 3600 % 60 < 10){
+                    hour = "0" + times.get(i) / 3600 % 60;
+                } else {
+                    hour = String.valueOf(times.get(i) / 3600 % 60);
+                }
+                if (times.get(i) % 3600 / 60 < 10){
+                    minute = "0" + times.get(i) % 3600 / 60;
+                } else {
+                    minute = String.valueOf(times.get(i) % 3600 / 60);
+                }
+                String text = (i + 1) + ") " + hour + ":" + minute;
                 time_view.setVisibility(View.VISIBLE);
                 ((TextView) time_view).setText(text);
             }
