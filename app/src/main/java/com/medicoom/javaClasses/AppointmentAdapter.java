@@ -31,16 +31,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
+public class AppointmentAdapter extends ArrayAdapter<Appointment> {
 
-    public AppointmentAdapter(Context context, ArrayList<AppointementPost> arr) {
+    public AppointmentAdapter(Context context, ArrayList<Appointment> arr) {
         super(context, R.layout.treatment_item, arr);
     }
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final AppointementPost curr_app = getItem(position);
+        final Appointment curr_app = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.treatment_item, null);
@@ -86,7 +86,7 @@ public class AppointmentAdapter extends ArrayAdapter<AppointementPost> {
         return convertView;
     }
 
-    void showMenu(View v, int menu, AppointementPost curr_app) {
+    void showMenu(View v, int menu, Appointment curr_app) {
         PopupMenu popupMenu = new PopupMenu(getContext(), v);
         popupMenu.getMenuInflater().inflate(menu, popupMenu.getMenu());
         popupMenu.show();

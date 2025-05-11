@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
 import com.medicoom.javaClasses.Medicine;
 import com.medicoom.javaClasses.MedicineAdapter;
-import com.medicoom.javaClasses.MedicinePost;
 
 import java.util.ArrayList;
 
@@ -91,7 +87,7 @@ public class FarmacyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_farmacy, container, false);
         ListView listView = contentView.findViewById(R.id.medicine_list);
-        ArrayList<MedicinePost> med_list = new ArrayList<>();
+        ArrayList<Medicine> med_list = new ArrayList<>();
 
         MedicineAdapter listAdapter = new MedicineAdapter(getActivity(), med_list);
         listView.setAdapter(listAdapter);
@@ -100,7 +96,7 @@ public class FarmacyFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //prepareSpace();
 
-                MedicinePost curr_med = listAdapter.getItem(position);
+                Medicine curr_med = listAdapter.getItem(position);
 
                 ChangeMedicineFragment chfr = new ChangeMedicineFragment();
 
@@ -135,10 +131,8 @@ public class FarmacyFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Medicine medicine = ds.getValue(Medicine.class);
                     if (medicine != null) {
-                        MedicinePost medWithId = new MedicinePost(medicine.getName(),
-                                medicine.getDosage(), medicine.getNum_of_tablets(),
-                                medicine.getGood_until(), medicine.getRemind_when(), ds.getKey());
-                        med_list.add(medWithId);
+                        medicine.setPostId(ds.getKey());
+                        med_list.add(medicine);
                     }
                 }
                 listAdapter.notifyDataSetChanged();
@@ -149,7 +143,7 @@ public class FarmacyFragment extends Fragment {
                 Log.e("Firebase", "loadMedicine:onCancelled", databaseError.toException());
             }
         };
-        mDatabase.addValueEventListener(medListener);
+        mDatabase.orderByChild("deleted").equalTo(false).addValueEventListener(medListener);
         return contentView;
     }
 }

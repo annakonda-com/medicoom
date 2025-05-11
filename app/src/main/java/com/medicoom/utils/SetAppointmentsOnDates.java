@@ -1,98 +1,72 @@
 package com.medicoom.utils;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.medicoom.javaClasses.AppointementPost;
+import com.medicoom.javaClasses.Appointment;
 import com.medicoom.javaClasses.AppointmentOnDate;
-import com.medicoom.javaClasses.Medicine;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class SetAppointmentsOnDates implements Runnable {
-    AppointementPost appointment;
+    Appointment appointment;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    String med_name_dosage;
 
-    public SetAppointmentsOnDates(AppointementPost appointment) {
+    public SetAppointmentsOnDates(Appointment appointment) {
         this.appointment = appointment;
     }
 
     @Override
     public void run() {
-        DatabaseReference database = FirebaseDatabase.getInstance
-                        ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("users" + "/" + currentUser.getUid() + "/medicines");
-        database.child(appointment.getMedicine_id())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Medicine med = dataSnapshot.getValue(Medicine.class);
-                        med_name_dosage = med.getName() + med.getDosage();
-                        boolean is_forever;
-                        int days;
-                        if (appointment.getDays() == -1) { // Назначение вечное
-                            is_forever = true;
-                            days = 90;
-                        } else {
-                            is_forever = false;
-                            days = appointment.getDays();
-                        }
-                        Calendar startDate = Calendar.getInstance();
-                        startDate.setTimeInMillis(appointment.getStart_date() * 1000L);
-                        if (appointment.getEvery_x_days() == 1) { // Принимать каждый день
-                            for (int i = 0; i < days; i++) {
-                                for (int time : appointment.getTimes()) {
-                                    AppointmentOnDate app = new AppointmentOnDate(med_name_dosage,
-                                            appointment.getDays() - i, appointment.getMedicine_id(),
-                                            appointment.getPost_id(), is_forever, null, false);
-                                    writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
-                                }
-                                startDate.add(Calendar.DATE, 1);
-                            }
-                        } else if (appointment.getDays_of_week() != null && !appointment.getDays_of_week().isEmpty()) { // Принимать по дням недели
-                            for (int i = 0; i < days; i++) {
-                                if (isCorrectDayOfWeek(appointment.getDays_of_week(), startDate.get(Calendar.DAY_OF_WEEK))) {
-                                    for (int time : appointment.getTimes()) {
-                                        AppointmentOnDate app = new AppointmentOnDate(med_name_dosage,
-                                                appointment.getDays() - i, appointment.getMedicine_id(),
-                                                appointment.getPost_id(), is_forever, null, false);
-                                        writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
-                                    }
-                                }
-                                startDate.add(Calendar.DATE, 1);
-                            }
-                        } else { // Принимать каждые х дней
-                            int i = 0;
-                            while (i < days) {
-                                for (int time : appointment.getTimes()) {
-                                    AppointmentOnDate app = new AppointmentOnDate(med_name_dosage,
-                                            appointment.getDays() - i, appointment.getMedicine_id(),
-                                            appointment.getPost_id(), is_forever, null, false);
-                                    writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
-                                    startDate.add(Calendar.DATE, appointment.getEvery_x_days());
-                                    i += appointment.getEvery_x_days();
-                                }
-                            }
-                        }
+        boolean is_forever;
+        int days;
+        if (appointment.getDays() == -1) { // Назначение вечное
+            is_forever = true;
+            days = 90;
+        } else {
+            is_forever = false;
+            days = appointment.getDays();
+        }
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTimeInMillis(appointment.getStart_date() * 1000L);
+        if (appointment.getEvery_x_days() == 1) { // Принимать каждый день
+            for (int i = 0; i < days; i++) {
+                for (int time : appointment.getTimes()) {
+                    AppointmentOnDate app = new AppointmentOnDate(
+                            appointment.getDays() - i, appointment.getMedicine_id(),
+                            appointment.getPost_id(), is_forever, null, false);
+                    writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
+                }
+                startDate.add(Calendar.DATE, 1);
+            }
+        } else if (appointment.getDays_of_week() != null && !appointment.getDays_of_week().isEmpty()) { // Принимать по дням недели
+            for (int i = 0; i < days; i++) {
+                if (isCorrectDayOfWeek(appointment.getDays_of_week(), startDate.get(Calendar.DAY_OF_WEEK))) {
+                    for (int time : appointment.getTimes()) {
+                        AppointmentOnDate app = new AppointmentOnDate(
+                                appointment.getDays() - i, appointment.getMedicine_id(),
+                                appointment.getPost_id(), is_forever, null, false);
+                        writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
-                    }
-                });
-
+                }
+                startDate.add(Calendar.DATE, 1);
+            }
+        } else { // Принимать каждые х дней
+            int i = 0;
+            while (i < days) {
+                for (int time : appointment.getTimes()) {
+                    AppointmentOnDate app = new AppointmentOnDate(
+                            appointment.getDays() - i, appointment.getMedicine_id(),
+                            appointment.getPost_id(), is_forever, null, false);
+                    writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
+                    startDate.add(Calendar.DATE, appointment.getEvery_x_days());
+                    i += appointment.getEvery_x_days();
+                }
+            }
+        }
     }
 
 
@@ -124,5 +98,4 @@ public class SetAppointmentsOnDates implements Runnable {
         }
         return is_correct;
     }
-
 }

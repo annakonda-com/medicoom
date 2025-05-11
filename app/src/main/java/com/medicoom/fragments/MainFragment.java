@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,21 +25,32 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
 import com.medicoom.javaClasses.AppointmentOnDate;
+import com.medicoom.javaClasses.TodayAppointmentAdapter;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainFragment extends Fragment {
     final String MAIN_FRAGMENT = "main_fragment";
     final String FULL_SCREEN = "full_screen";
-    HashMap<Integer, AppointmentOnDate> appointments_on_times = new HashMap<>();
+    ArrayList<Map.Entry<Integer, AppointmentOnDate>> appointments_on_times = new ArrayList<>();
 
     public MainFragment() {
         // Required empty public constructor
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        TodayAppointmentAdapter myAdapter = new TodayAppointmentAdapter(getContext(), appointments_on_times);
+        ListView today_app = view.findViewById(R.id.today_list);
+        today_app.setAdapter(myAdapter);
+        Calendar today = Calendar.getInstance();
+        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        getTodayAppointments((int)(today.getTimeInMillis() / 1000L), myAdapter);
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,20 +93,22 @@ public class MainFragment extends Fragment {
                 Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
             }
         });
-        Calendar today = Calendar.getInstance();
-        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        //ArrayList<Map.Entry<Integer, ArrayList<AppointmentOnDate>>> app_on_times = new ArrayList<>(appointments_on_times.entrySet());
 
-        getTodayAppointments(((int)(today.getTimeInMillis() / 1000L)));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
-    private void getTodayAppointments(int today_date){
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    private void getTodayAppointments(int today_date, TodayAppointmentAdapter adapter){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -103,12 +118,12 @@ public class MainFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot time: dataSnapshot.getChildren()){
-                    Log.d("MAYTAG", time.getKey());
-                    Log.d("MAYTAG", time.toString());
-                    Log.d("MAYTAG", time.getValue().toString());
-                    Log.d("MAYTAG", "-----------");
                     for (DataSnapshot child_child: time.getChildren()){
-                        Log.d("MAYTAG", child_child.getValue(AppointmentOnDate.class).toString());
+                        AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
+                        curr_app.setPost_id(child_child.getKey());
+                        appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
+                                (Integer.valueOf(time.getKey()), curr_app));
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }

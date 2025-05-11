@@ -15,6 +15,7 @@ public class Appointment {
     boolean on_pause;
     boolean archive;
     boolean deleted;
+    String post_id;
 
     public Appointment(int amount_at_once, boolean archive, int days, List<Integer> days_of_week,
                        boolean deleted, int every_x_days, String how_to_get, String medicine_id,
@@ -32,9 +33,19 @@ public class Appointment {
         this.start_date = start_date;
         this.times = times;
     }
-    public Appointment(){
+
+    public Appointment() {
 
     }
+
+    public String getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
+    }
+
 
     public int getAmount_at_once() {
         return amount_at_once;

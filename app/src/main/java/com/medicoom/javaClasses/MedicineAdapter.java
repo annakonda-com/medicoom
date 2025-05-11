@@ -30,14 +30,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
-    public MedicineAdapter(Context context, ArrayList<MedicinePost> arr) {
+public class MedicineAdapter extends ArrayAdapter<Medicine> {
+    public MedicineAdapter(Context context, ArrayList<Medicine> arr) {
         super(context, R.layout.medicine_item, arr);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final MedicinePost med = getItem(position);
+        final Medicine med = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.medicine_item, null);
@@ -91,15 +91,24 @@ public class MedicineAdapter extends ArrayAdapter<MedicinePost> {
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                boolean is_using = false;
                                 if (dataSnapshot.exists()) {
-                                    Toast.makeText(getContext(),
-                                            "Лекарство используется в назначениях! " +
-                                                    "Вы не можете его удалить", Toast.LENGTH_LONG).show();
-                                }else{
+                                    for (DataSnapshot app: dataSnapshot.getChildren()){
+                                        if (!app.getValue(Appointment.class).isDeleted()){
+                                            Toast.makeText(getContext(),
+                                                    "Лекарство используется в назначениях! " +
+                                                            "Вы не можете его удалить", Toast.LENGTH_LONG).show();
+                                            is_using = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!is_using){
                                     DatabaseReference mDatabase = FirebaseDatabase.getInstance
                                                     ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                                             .getReference("users/" + currentUser.getUid());
-                                    mDatabase.child("medicines").child(med.post_id).removeValue();
+                                    mDatabase.child("medicines").child(med.getPostId())
+                                            .child("deleted").setValue(true);
                                 }
                             }
 

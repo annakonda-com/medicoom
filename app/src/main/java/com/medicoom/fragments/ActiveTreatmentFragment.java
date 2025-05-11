@@ -1,7 +1,5 @@
 package com.medicoom.fragments;
 
-import static androidx.core.os.BundleCompat.getParcelableArrayList;
-
 import static com.medicoom.utils.myUtils.dateFormat;
 
 import android.os.Bundle;
@@ -9,7 +7,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +22,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.medicoom.MainActivity;
 import com.medicoom.R;
-import com.medicoom.javaClasses.AppointementPost;
 import com.medicoom.javaClasses.Appointment;
 import com.medicoom.javaClasses.AppointmentAdapter;
-import com.medicoom.javaClasses.Medicine;
-import com.medicoom.javaClasses.MedicinePost;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ActiveTreatmentFragment extends Fragment {
 
@@ -66,14 +57,14 @@ public class ActiveTreatmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_active_treatment, container, false);
         ListView listView = contentView.findViewById(R.id.appointments_list);
-        ArrayList<AppointementPost> app_list = new ArrayList<>();
+        ArrayList<Appointment> app_list = new ArrayList<>();
         AppointmentAdapter listAdapter = new AppointmentAdapter(getActivity(), app_list);
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppointementPost curr_app = listAdapter.getItem(position);
+                Appointment curr_app = listAdapter.getItem(position);
 
                 ChangeAppointmentFragment chfr = new ChangeAppointmentFragment();
 
@@ -156,13 +147,9 @@ public class ActiveTreatmentFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Appointment med = ds.getValue(Appointment.class);
                     if (med != null) {
-                        AppointementPost appWithId = new AppointementPost(med.getAmount_at_once(),
-                                med.isArchive(), med.getDays(), med.getDays_of_week(),
-                                med.isDeleted(), med.getEvery_x_days(), med.getHow_to_get(),
-                                med.getMedicine_id(), med.isNotifications(), med.isOn_pause(),
-                                med.getStart_date(), med.getTimes(), ds.getKey());
-                        if (!appWithId.isDeleted()) {
-                            app_list.add(appWithId);
+                        med.setPost_id(ds.getKey());
+                        if (!med.isDeleted()) {
+                            app_list.add(med);
                         }
                     }
                 }

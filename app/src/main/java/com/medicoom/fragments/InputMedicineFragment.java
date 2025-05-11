@@ -7,34 +7,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.medicoom.javaClasses.Medicine;
 import com.medicoom.R;
-import com.medicoom.javaClasses.MedicinePost;
-import com.medicoom.javaClasses.MedicineSpinnerAdapter;
 import com.medicoom.utils.myUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -79,7 +71,7 @@ public class InputMedicineFragment extends Fragment {
                 if (validateForm(view)) {
                     Medicine newPost = new Medicine(name.getText().toString(),
                             dosage.getText().toString(), int_num_of_tablets,
-                            startDate, int_remind_when);
+                            startDate, int_remind_when, false);
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance
                                     ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                             .getReference("users");

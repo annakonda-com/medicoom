@@ -5,17 +5,14 @@ import static com.medicoom.utils.myUtils.timeFormat;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,14 +26,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,21 +41,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
-import com.medicoom.javaClasses.AppointementPost;
 import com.medicoom.javaClasses.Appointment;
 import com.medicoom.javaClasses.Medicine;
-import com.medicoom.javaClasses.MedicinePost;
 import com.medicoom.javaClasses.MedicineSpinnerAdapter;
 import com.medicoom.utils.SetAppointmentsOnDates;
 import com.medicoom.utils.myUtils;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 
 public class InputAppointmentFragment extends Fragment {
@@ -70,7 +59,7 @@ public class InputAppointmentFragment extends Fragment {
 
     public ArrayList<Integer> times = new ArrayList<>();
 
-    MedicinePost picked_med;
+    Medicine picked_med;
     String how_to_get_str = null;
 
     int num_of_times = 1;
@@ -222,7 +211,7 @@ public class InputAppointmentFragment extends Fragment {
         ((RadioButton) contentView.findViewById(R.id.every_day)).setChecked(true);
         ((RadioButton) contentView.findViewById(R.id.before)).setChecked(true);
 
-        ArrayList<MedicinePost> med_list = new ArrayList<>();
+        ArrayList<Medicine> med_list = new ArrayList<>();
         MedicineSpinnerAdapter adapter = new MedicineSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, med_list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = contentView.findViewById(R.id.spinner);
@@ -230,7 +219,7 @@ public class InputAppointmentFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MedicinePost curr_med = adapter.getItem(position);
+                Medicine curr_med = adapter.getItem(position);
                 if (curr_med.getPostId() != null && curr_med.getPostId().equals(FAKE_ID)) {
                     InputMedicineFragment chfr = new InputMedicineFragment();
 
@@ -264,14 +253,14 @@ public class InputAppointmentFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Medicine medicine = ds.getValue(Medicine.class);
                     if (medicine != null) {
-                        MedicinePost medWithId = new MedicinePost(medicine.getName(),
-                                medicine.getDosage(), medicine.getNum_of_tablets(),
-                                medicine.getGood_until(), medicine.getRemind_when(), ds.getKey());
-                        med_list.add(medWithId);
+                        medicine.setPostId(ds.getKey());
+                        med_list.add(medicine);
                     }
                 }
-                med_list.add(new MedicinePost("Добавить новое лекарство", null,
-                        -1, -1, -1, FAKE_ID));
+                Medicine fake_med = new Medicine("Добавить новое лекарство", null,
+                        -1, -1, -1, false);
+                fake_med.setPostId(FAKE_ID);
+                med_list.add(fake_med);
                 adapter.notifyDataSetChanged();
             }
 
@@ -338,12 +327,8 @@ public class InputAppointmentFragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getActivity(), "Успешно добавлено!", Toast.LENGTH_LONG).show();
-                AppointementPost appWithId = new AppointementPost(post.getAmount_at_once(),
-                        post.isArchive(), post.getDays(), post.getDays_of_week(),
-                        post.isDeleted(), post.getEvery_x_days(), post.getHow_to_get(),
-                        post.getMedicine_id(), post.isNotifications(), post.isOn_pause(),
-                        post.getStart_date(), post.getTimes(), newPost.getKey());
-                Runnable createAppOnDates = new SetAppointmentsOnDates(appWithId);
+                post.setPost_id(newPost.getKey());
+                Runnable createAppOnDates = new SetAppointmentsOnDates(post);
                 Thread thread = new Thread(createAppOnDates);
                 thread.start();
                 getActivity().getSupportFragmentManager().popBackStack();

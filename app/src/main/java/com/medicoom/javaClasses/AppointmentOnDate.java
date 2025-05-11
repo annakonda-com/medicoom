@@ -1,7 +1,6 @@
 package com.medicoom.javaClasses;
 
 public class AppointmentOnDate {
-    String med_name_and_dosage;
     int rest_to_get;
     String med_id;
     String appointment_id;
@@ -10,10 +9,8 @@ public class AppointmentOnDate {
     boolean is_got;
     String post_id;
 
-    public AppointmentOnDate(String med_name_and_dosage,
-                             int rest_to_get, String med_id, String appointment_id,
+    public AppointmentOnDate(int rest_to_get, String med_id, String appointment_id,
                              boolean is_forever, String comment, boolean is_got) {
-        this.med_name_and_dosage = med_name_and_dosage;
         this.rest_to_get = rest_to_get;
         this.med_id = med_id;
         this.appointment_id = appointment_id;
@@ -47,14 +44,6 @@ public class AppointmentOnDate {
 
     public void setIs_got(boolean is_got) {
         this.is_got = is_got;
-    }
-
-    public String getMed_name_and_dosage() {
-        return med_name_and_dosage;
-    }
-
-    public void setMed_name_and_dosage(String med_name_and_dosage) {
-        this.med_name_and_dosage = med_name_and_dosage;
     }
 
     public int getRest_to_get() {
@@ -93,7 +82,6 @@ public class AppointmentOnDate {
     public String toString() {
         return "AppointmentOnDate{" +
                 "appointment_id='" + appointment_id + '\'' +
-                ", med_name_and_dosage='" + med_name_and_dosage + '\'' +
                 ", rest_to_get=" + rest_to_get +
                 ", med_id='" + med_id + '\'' +
                 ", is_forever=" + is_forever +

@@ -7,16 +7,34 @@ public class Medicine {
     int good_until;
     int remind_when;
     String post_id;
+    boolean deleted;
 
-    public Medicine(String name, String dosage, int num_of_tablets, int good_until, int remind_when) {
+    public Medicine(String name, String dosage, int num_of_tablets, int good_until, int remind_when, boolean deleted) {
         this.name = name;
         this.dosage = dosage;
         this.num_of_tablets = num_of_tablets;
         this.good_until = good_until;
         this.remind_when = remind_when;
+        this.deleted = deleted;
     }
 
     public Medicine() {
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getPostId() {
+        return post_id;
+    }
+
+    public void setPostId(String post_id) {
+        this.post_id = post_id;
     }
 
     public String getName() {
