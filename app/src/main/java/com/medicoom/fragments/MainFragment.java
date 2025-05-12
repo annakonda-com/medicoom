@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
+import com.medicoom.javaClasses.Appointment;
 import com.medicoom.javaClasses.AppointmentOnDate;
 import com.medicoom.javaClasses.TodayAppointmentAdapter;
 
@@ -85,6 +86,7 @@ public class MainFragment extends Fragment {
                 if (!dataSnapshot.exists()) {
                     fab.animate().alpha(1.0f);
                     fab.setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.comment_layout).setVisibility(View.GONE);
                 }
             }
 

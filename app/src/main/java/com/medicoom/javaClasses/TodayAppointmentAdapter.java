@@ -40,21 +40,26 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.today_item, null);
         }
 
+        String text;
         Integer time = curr_app.getKey();
-        String hour;
-        String minute;
-        if (time / 3600 % 60 < 10) {
-            hour = "0" + time / 3600 % 60;
+        if (time != -1) {
+            String hour;
+            String minute;
+            if (time / 3600 % 60 < 10) {
+                hour = "0" + time / 3600 % 60;
+            } else {
+                hour = String.valueOf(time / 3600 % 60);
+            }
+            if (time % 3600 / 60 < 10) {
+                minute = "0" + time % 3600 / 60;
+            } else {
+                minute = String.valueOf(time % 3600 / 60);
+            }
+             text = hour + ":" + minute;
+            ((TextView) convertView.findViewById(R.id.today_time)).setText(text);
         } else {
-            hour = String.valueOf(time / 3600 % 60);
+            convertView.findViewById(R.id.today_time).setVisibility(View.GONE);
         }
-        if (time % 3600 / 60 < 10) {
-            minute = "0" + time % 3600 / 60;
-        } else {
-            minute = String.valueOf(time % 3600 / 60);
-        }
-        String text = hour + ":" + minute;
-        ((TextView) convertView.findViewById(R.id.today_time)).setText(text);
 
         TextView name = convertView.findViewById(R.id.today_name);
         DatabaseReference database = FirebaseDatabase.getInstance
@@ -78,11 +83,12 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
         DatabaseReference mdatabase = FirebaseDatabase.getInstance
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users" + "/" + currentUser.getUid() + "/appointments");
-        database.child(curr_app.getValue().getAppointment_id())
+        mdatabase.child(curr_app.getValue().getAppointment_id())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Appointment app = dataSnapshot.getValue(Appointment.class);
+                        Log.d("MAYTAG", app.toString());
                         String description;
                         String how_to_get = "";
                         if (app.getHow_to_get() != null) {

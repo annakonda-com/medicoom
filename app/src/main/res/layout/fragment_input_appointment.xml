@@ -407,9 +407,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:hint="@string/num_of_tablets_at_once"
-                    android:visibility="gone"
-                    tools:visibility="visible">
+                    android:hint="@string/num_of_tablets_at_once">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/num_of_tablets"
