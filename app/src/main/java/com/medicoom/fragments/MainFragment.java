@@ -44,6 +44,7 @@ public class MainFragment extends Fragment {
     public MainFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TodayAppointmentAdapter myAdapter = new TodayAppointmentAdapter(getContext(), appointments_on_times);
@@ -51,7 +52,7 @@ public class MainFragment extends Fragment {
         today_app.setAdapter(myAdapter);
         Calendar today = Calendar.getInstance();
         today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        getTodayAppointments((int)(today.getTimeInMillis() / 1000L), myAdapter);
+        getTodayAppointments((int) (today.getTimeInMillis() / 1000L), myAdapter);
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +111,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void getTodayAppointments(int today_date, TodayAppointmentAdapter adapter){
+    private void getTodayAppointments(int today_date, TodayAppointmentAdapter adapter) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -119,8 +120,11 @@ public class MainFragment extends Fragment {
         mDatabase.child("appointments_on_dates").child(String.valueOf(today_date)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot time: dataSnapshot.getChildren()){
-                    for (DataSnapshot child_child: time.getChildren()){
+                if (!   appointments_on_times.isEmpty()) {
+                    appointments_on_times.clear();
+                }
+                for (DataSnapshot time : dataSnapshot.getChildren()) {
+                    for (DataSnapshot child_child : time.getChildren()) {
                         AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
                         curr_app.setPost_id(child_child.getKey());
                         appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
@@ -128,6 +132,7 @@ public class MainFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 }
+
             }
 
             @Override

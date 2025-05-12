@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,8 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
+import com.medicoom.utils.SetAppointmentsOnDates;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -55,7 +59,7 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
             } else {
                 minute = String.valueOf(time % 3600 / 60);
             }
-             text = hour + ":" + minute;
+            text = hour + ":" + minute;
             ((TextView) convertView.findViewById(R.id.today_time)).setText(text);
         } else {
             convertView.findViewById(R.id.today_time).setVisibility(View.GONE);
@@ -108,9 +112,33 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
                     }
                 });
 
-        if (curr_app.getValue().isIs_got()){
-            convertView.findViewById(R.id.radio_btn).setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
+        Calendar today = Calendar.getInstance();
+        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        int today_int = (int)(today.getTimeInMillis() / 1000L);
+        View radio_btn = convertView.findViewById(R.id.radio_btn);
+        radio_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!curr_app.getValue().isIs_got()) {
+                    curr_app.getValue().setIs_got(true);
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    DatabaseReference appointments = FirebaseDatabase.getInstance
+                                    ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
+                            .getReference("users" + "/" + currentUser.getUid() + "/appointments_on_dates");
+
+                    appointments.child(String.valueOf(today_int)).child(String.valueOf(curr_app.getKey())).child(curr_app.getValue().getPost_id()).setValue(curr_app.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
+                        }
+                    });
+                }
+            }
+        });
+        if (curr_app.getValue().isIs_got()) {
+            radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
         }
+
         return convertView;
     }
 
