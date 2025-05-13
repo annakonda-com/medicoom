@@ -8,18 +8,28 @@ public class AppointmentOnDate {
     String comment;
     boolean is_got;
     String post_id;
+    int got_time;
 
     public AppointmentOnDate(int rest_to_get, String med_id, String appointment_id,
-                             boolean is_forever, String comment, boolean is_got) {
+                             boolean is_forever, String comment, boolean is_got, int got_time) {
         this.rest_to_get = rest_to_get;
         this.med_id = med_id;
         this.appointment_id = appointment_id;
         this.is_forever = is_forever;
         this.comment = comment;
         this.is_got = is_got;
+        this.got_time = got_time;
     }
 
     public AppointmentOnDate() {
+    }
+
+    public int getGot_time() {
+        return got_time;
+    }
+
+    public void setGot_time(int got_time) {
+        this.got_time = got_time;
     }
 
     public String getPost_id() {

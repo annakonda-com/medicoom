@@ -26,6 +26,7 @@ import com.medicoom.utils.SetAppointmentsOnDates;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, AppointmentOnDate>> {
@@ -119,8 +120,10 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
         radio_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!curr_app.getValue().isIs_got()) {
-                    curr_app.getValue().setIs_got(true);
+                    Calendar noww = Calendar.getInstance(Locale.getDefault());
+                    int got_time = (noww.get(Calendar.HOUR_OF_DAY) * 3600) + (noww.get(Calendar.MINUTE) * 60);
+                    curr_app.getValue().setIs_got(!curr_app.getValue().isIs_got());
+                    curr_app.getValue().setGot_time(got_time);
                     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     DatabaseReference appointments = FirebaseDatabase.getInstance
                                     ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -129,14 +132,19 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
                     appointments.child(String.valueOf(today_int)).child(String.valueOf(curr_app.getKey())).child(curr_app.getValue().getPost_id()).setValue(curr_app.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
+                            if (curr_app.getValue().isIs_got()) {
+                                radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
+                            } else {
+                                radio_btn.setBackgroundResource(R.drawable.radio_button_unchecked);
+                            }
                         }
                     });
-                }
             }
         });
         if (curr_app.getValue().isIs_got()) {
             radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
+        } else {
+            radio_btn.setBackgroundResource(R.drawable.radio_button_unchecked);
         }
 
         return convertView;

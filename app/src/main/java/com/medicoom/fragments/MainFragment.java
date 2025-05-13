@@ -120,7 +120,7 @@ public class MainFragment extends Fragment {
         mDatabase.child("appointments_on_dates").child(String.valueOf(today_date)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!   appointments_on_times.isEmpty()) {
+                if (!appointments_on_times.isEmpty()) {
                     appointments_on_times.clear();
                 }
                 for (DataSnapshot time : dataSnapshot.getChildren()) {

@@ -37,7 +37,7 @@ public class SetAppointmentsOnDates implements Runnable {
                 for (int time : appointment.getTimes()) {
                     AppointmentOnDate app = new AppointmentOnDate(
                             appointment.getDays() - i, appointment.getMedicine_id(),
-                            appointment.getPost_id(), is_forever, null, false);
+                            appointment.getPost_id(), is_forever, null, false, time);
                     writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                 }
                 startDate.add(Calendar.DATE, 1);
@@ -48,7 +48,7 @@ public class SetAppointmentsOnDates implements Runnable {
                     for (int time : appointment.getTimes()) {
                         AppointmentOnDate app = new AppointmentOnDate(
                                 appointment.getDays() - i, appointment.getMedicine_id(),
-                                appointment.getPost_id(), is_forever, null, false);
+                                appointment.getPost_id(), is_forever, null, false, time);
                         writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     }
                 }
@@ -60,7 +60,7 @@ public class SetAppointmentsOnDates implements Runnable {
                 for (int time : appointment.getTimes()) {
                     AppointmentOnDate app = new AppointmentOnDate(
                             appointment.getDays() - i, appointment.getMedicine_id(),
-                            appointment.getPost_id(), is_forever, null, false);
+                            appointment.getPost_id(), is_forever, null, false, time);
                     writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     startDate.add(Calendar.DATE, appointment.getEvery_x_days());
                     i += appointment.getEvery_x_days();
