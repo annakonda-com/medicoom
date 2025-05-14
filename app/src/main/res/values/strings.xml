@@ -75,5 +75,7 @@
     <string name="rest_to_get">Осталось принимать ещё</string>
     <string name="on_pause_description">Поставить на паузу (не присылать уведомления и не показывать на главном экране)</string>
     <string name="comment_to_day">Комментарий ко дню</string>
+    <string name="comment_to_got">Комментарий к приёму</string>
+    <string name="is_got">Лекарство принято</string>
 
 </resources>
