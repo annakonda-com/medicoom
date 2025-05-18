@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ChangeTodayAppointmentFragment">
+    tools:context=".fragments.ChangeTodayAppointmentFragment"
+    android:background="@color/md_theme_inverseOnSurface">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/my_toolbar_input_med"
+            android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/md_theme_surface"
@@ -35,25 +36,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amount_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:hint="Количество таблеток / порций">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-        </com.google.android.material.textfield.TextInputLayout>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/is_got"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            android:id="@+id/is_got"/>
 
     </LinearLayout>
     <Button
@@ -62,5 +50,6 @@
         android:text="@string/save"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="50dp"
-        android:width="200dp"/>
+        android:width="200dp"
+        android:id="@+id/save"/>
 </FrameLayout>

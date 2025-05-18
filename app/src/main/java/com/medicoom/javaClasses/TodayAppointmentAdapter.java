@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medicoom.R;
 import com.medicoom.utils.SetAppointmentsOnDates;
+import com.medicoom.utils.myUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,7 +94,7 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Appointment app = dataSnapshot.getValue(Appointment.class);
-                        Log.d("MAYTAG", app.toString());
+                        // Log.d("MAYTAG", app.toString());
                         String description;
                         String how_to_get = "";
                         if (app.getHow_to_get() != null) {
@@ -115,30 +116,35 @@ public class TodayAppointmentAdapter extends ArrayAdapter<Map.Entry<Integer, App
 
         Calendar today = Calendar.getInstance();
         today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        int today_int = (int)(today.getTimeInMillis() / 1000L);
+        int today_int = (int) (today.getTimeInMillis() / 1000L);
         View radio_btn = convertView.findViewById(R.id.radio_btn);
         radio_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Calendar noww = Calendar.getInstance(Locale.getDefault());
-                    int got_time = (noww.get(Calendar.HOUR_OF_DAY) * 3600) + (noww.get(Calendar.MINUTE) * 60);
-                    curr_app.getValue().setIs_got(!curr_app.getValue().isIs_got());
-                    curr_app.getValue().setGot_time(got_time);
-                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                    DatabaseReference appointments = FirebaseDatabase.getInstance
-                                    ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
-                            .getReference("users" + "/" + currentUser.getUid() + "/appointments_on_dates");
+                Calendar noww = Calendar.getInstance(Locale.getDefault());
+                int got_time = (noww.get(Calendar.HOUR_OF_DAY) * 3600) + (noww.get(Calendar.MINUTE) * 60);
+                AppointmentOnDate new_app = new AppointmentOnDate(curr_app.getValue());
+                new_app.setPost_id(null);
+                new_app.setIs_got(!new_app.isIs_got());
+                new_app.setGot_time(got_time);
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference appointments = FirebaseDatabase.getInstance
+                                ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
+                        .getReference("users" + "/" + currentUser.getUid() + "/appointments_on_dates");
 
-                    appointments.child(String.valueOf(today_int)).child(String.valueOf(curr_app.getKey())).child(curr_app.getValue().getPost_id()).setValue(curr_app.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            if (curr_app.getValue().isIs_got()) {
-                                radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
-                            } else {
-                                radio_btn.setBackgroundResource(R.drawable.radio_button_unchecked);
+                appointments.child(String.valueOf(today_int)).child(String.valueOf(curr_app.getKey()))
+                        .child(curr_app.getValue().getPost_id())
+                        .setValue(new_app).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                if (new_app.isIs_got()) {
+                                    radio_btn.setBackgroundResource(R.drawable.baseline_check_circle_outline_24);
+                                } else {
+                                    radio_btn.setBackgroundResource(R.drawable.radio_button_unchecked);
+                                }
                             }
-                        }
-                    });
+                        });
+                myUtils.change_num_of_tablets(new_app.isIs_got(), currentUser, new_app, getContext());
             }
         });
         if (curr_app.getValue().isIs_got()) {

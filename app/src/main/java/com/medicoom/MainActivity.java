@@ -32,11 +32,23 @@ public class MainActivity extends AppCompatActivity {
     final String FULL_SCREEN = "full_screen";
 
     private void setMainFragments(Fragment fr) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
-        ft.addToBackStack(null);
-        ft.commit();
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (!fragments.isEmpty()) {
+            Fragment last_fragment = fragments.get(fragments.size() - 1);
+            if (!last_fragment.getTag().equals(FULL_SCREEN)) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        }else{
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.replace(R.id.fragment_container, fr, MAIN_FRAGMENT);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
     }
 
     public void setBottomNavigation() {
@@ -108,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
                 public void handleOnBackPressed() {
                     List<Fragment> fragments = getSupportFragmentManager().getFragments();
                     Fragment last_fragment = fragments.get(fragments.size() - 1);
-                    /* Log.d("MAYTAG", "------");
+                    /*Log.d("MAYTAG", "------");
                     for(Fragment x: getSupportFragmentManager().getFragments()){
                         Log.d("MAYTAG", x.toString());
                     }
-                    Log.d("MAYTAG", "------"); */
+                    Log.d("MAYTAG", "------");*/
 
                     if (last_fragment.getTag().equals(FULL_SCREEN)) {
                         getSupportFragmentManager().popBackStack();

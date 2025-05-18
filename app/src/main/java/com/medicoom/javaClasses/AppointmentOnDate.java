@@ -1,5 +1,9 @@
 package com.medicoom.javaClasses;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class AppointmentOnDate {
     int rest_to_get;
     String med_id;
@@ -23,6 +27,41 @@ public class AppointmentOnDate {
 
     public AppointmentOnDate() {
     }
+    public AppointmentOnDate(Bundle data) {
+        this.rest_to_get = data.getInt("rest_to_get");
+        this.med_id = data.getString("med_id");
+        this.appointment_id = data.getString("appointment_id");
+        this.is_forever = data.getBoolean("is_forever");
+        this.comment = data.getString("comment");
+        this.is_got = data.getBoolean("is_got");
+        this.got_time = data.getInt("got_time");
+        this.post_id = data.getString("post_id");
+    }
+
+    public Bundle makeBundle () {
+        Bundle app_info = new Bundle();
+        app_info.putInt("rest_to_get", this.rest_to_get);
+        app_info.putString("med_id", this.med_id);
+        app_info.putString("appointment_id", this.appointment_id);
+        app_info.putBoolean("is_forever", this.is_forever);
+        app_info.putString("comment", this.comment);
+        app_info.putBoolean("is_got", this.is_got);
+        app_info.putInt("got_time", this.got_time);
+        app_info.putString("post_id", this.post_id);
+        return app_info;
+    }
+
+    public AppointmentOnDate(AppointmentOnDate app){
+        this.rest_to_get = app.getRest_to_get();
+        this.med_id = app.getMed_id();
+        this.appointment_id = app.getAppointment_id();
+        this.is_forever = app.isIs_forever();
+        this.comment = app.getComment();
+        this.is_got = app.isIs_got();
+        this.got_time = app.getGot_time();
+        this.post_id = app.getPost_id();
+    }
+
 
     public int getGot_time() {
         return got_time;

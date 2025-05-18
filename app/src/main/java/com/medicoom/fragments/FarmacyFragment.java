@@ -42,25 +42,6 @@ public class FarmacyFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /*private void prepareSpace(){
-        BottomAppBar bottomBar = getActivity().findViewById(R.id.bottomBar);
-        //bottomBar.animate().alpha(0.0f);
-        bottomBar.setVisibility(View.GONE);
-
-        Toolbar tlbt = getActivity().findViewById(R.id.my_toolbar);
-        //tlbt.animate().alpha(0.0f);
-        tlbt.setVisibility(View.GONE);
-
-        FloatingActionButton ftb = getActivity().findViewById(R.id.add_medicine);
-        //ftb.animate().alpha(0.0f);
-        ftb.setVisibility(View.GONE);
-
-        FloatingActionButton nftb = getActivity().findViewById(R.id.fab);
-        //nftb.animate().alpha(0.0f);
-        nftb.setVisibility(View.GONE);
-    }*/
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +75,6 @@ public class FarmacyFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //prepareSpace();
-
                 Medicine curr_med = listAdapter.getItem(position);
 
                 ChangeMedicineFragment chfr = new ChangeMedicineFragment();
@@ -112,8 +91,8 @@ public class FarmacyFragment extends Fragment {
 
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.replace(R.id.main, chfr, FULL_SCREEN);
                 ft.remove(FarmacyFragment.this);
+                ft.replace(R.id.main, chfr, FULL_SCREEN);
                 ft.addToBackStack(null);
                 ft.commit();
             }

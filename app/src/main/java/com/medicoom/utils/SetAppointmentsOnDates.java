@@ -36,7 +36,7 @@ public class SetAppointmentsOnDates implements Runnable {
             for (int i = 0; i < days; i++) {
                 for (int time : appointment.getTimes()) {
                     AppointmentOnDate app = new AppointmentOnDate(
-                            appointment.getDays() - i, appointment.getMedicine_id(),
+                            appointment.getDays() - i - 1, appointment.getMedicine_id(),
                             appointment.getPost_id(), is_forever, null, false, time);
                     writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                 }
@@ -47,7 +47,7 @@ public class SetAppointmentsOnDates implements Runnable {
                 if (isCorrectDayOfWeek(appointment.getDays_of_week(), startDate.get(Calendar.DAY_OF_WEEK))) {
                     for (int time : appointment.getTimes()) {
                         AppointmentOnDate app = new AppointmentOnDate(
-                                appointment.getDays() - i, appointment.getMedicine_id(),
+                                appointment.getDays() - i - 1, appointment.getMedicine_id(),
                                 appointment.getPost_id(), is_forever, null, false, time);
                         writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     }
@@ -59,7 +59,7 @@ public class SetAppointmentsOnDates implements Runnable {
             while (i < days) {
                 for (int time : appointment.getTimes()) {
                     AppointmentOnDate app = new AppointmentOnDate(
-                            appointment.getDays() - i, appointment.getMedicine_id(),
+                            appointment.getDays() - i - 1, appointment.getMedicine_id(),
                             appointment.getPost_id(), is_forever, null, false, time);
                     writePost((int) (startDate.getTimeInMillis() / 1000L), time, app);
                     startDate.add(Calendar.DATE, appointment.getEvery_x_days());
