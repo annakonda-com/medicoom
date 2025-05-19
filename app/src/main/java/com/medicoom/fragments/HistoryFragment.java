@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,10 +29,13 @@ import com.medicoom.javaClasses.HistoryAppointmentAdapter;
 import com.medicoom.utils.myUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class HistoryFragment extends Fragment {
     //ArrayList<Appointment> appointments = new ArrayList<>();
     DatabaseReference baseReferense = FirebaseDatabase.getInstance(myUtils.dbPath).getReference("users");
+    final String FULL_SCREEN = "full_screen";
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -50,7 +54,26 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 String date = dayOfMonth + "-" + (month + 1) + "-" + year;
-                Log.d("MAYTAG", date);
+                Calendar now = Calendar.getInstance(Locale.getDefault());
+                now.set(Calendar.YEAR, year);
+                now.set(Calendar.MONTH, year);
+                now.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                now.set(Calendar.HOUR_OF_DAY, 0);
+                now.set(Calendar.MINUTE, 0);
+                now.set(Calendar.SECOND, 0);
+                int day = (int) (now.getTimeInMillis() / 1000L);
+                Bundle args = new Bundle();
+                args.putInt("day", day);
+
+                HistoryAppointmentsFragment apfr = new HistoryAppointmentsFragment();
+                apfr.setArguments(args);
+
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.remove(HistoryFragment.this);
+                ft.replace(R.id.main, apfr, FULL_SCREEN);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
     }
