@@ -3,6 +3,7 @@ package com.medicoom;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.medicoom.fragments.FarmacyFragment;
 import com.medicoom.fragments.HistoryFragment;
 import com.medicoom.fragments.MainFragment;
+import com.medicoom.fragments.SettingsFragment;
 import com.medicoom.fragments.TreatmentFragment;
 
 import java.util.List;
@@ -143,6 +145,24 @@ public class MainActivity extends AppCompatActivity {
             tlbar.setTitle(R.string.today);*/
             MainActivity.this.getOnBackPressedDispatcher().addCallback(this, callback);
             setBottomNavigation();
+
+            Toolbar tlbar = findViewById(R.id.my_toolbar);
+            tlbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.action_settings){
+                        SettingsFragment stfr = new SettingsFragment();
+
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                        ft.replace(R.id.main, stfr, FULL_SCREEN);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                    return false;
+                }
+            });
+
         }
     }
 
