@@ -1,6 +1,7 @@
 package com.medicoom;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -160,6 +161,15 @@ public class MainActivity extends AppCompatActivity {
                         ft.commit();
                     }
                     return false;
+                }
+            });
+
+            findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phoneNumber = "tel:103";
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber));
+                    startActivity(dialIntent);
                 }
             });
 
