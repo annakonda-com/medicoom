@@ -142,4 +142,23 @@ public class Appointment {
     public void setTimes(List<Integer> times) {
         this.times = times;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "amount_at_once=" + amount_at_once +
+                ", medicine_id='" + medicine_id + '\'' +
+                ", how_to_get='" + how_to_get + '\'' +
+                ", start_date=" + start_date +
+                ", days=" + days +
+                ", days_of_week=" + days_of_week +
+                ", times=" + times +
+                ", every_x_days=" + every_x_days +
+                ", notifications=" + notifications +
+                ", on_pause=" + on_pause +
+                ", archive=" + archive +
+                ", deleted=" + deleted +
+                ", post_id='" + post_id + '\'' +
+                '}';
+    }
 }

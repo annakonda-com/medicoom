@@ -77,5 +77,6 @@
     <string name="comment_to_day">Комментарий ко дню</string>
     <string name="comment_to_got">Комментарий к приёму</string>
     <string name="is_got">Лекарство принято</string>
+    <string name="go_to_date">Перейти к дате</string>
 
 </resources>
