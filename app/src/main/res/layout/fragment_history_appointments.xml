@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/today_list"
+            android:id="@+id/that_day_list"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_above="@+id/send_comment_layout"
