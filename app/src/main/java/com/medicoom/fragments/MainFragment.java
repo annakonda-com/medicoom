@@ -50,36 +50,6 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        TodayAppointmentAdapter myAdapter = new TodayAppointmentAdapter(getContext(), appointments_on_times);
-        ListView today_app = view.findViewById(R.id.today_list);
-        today_app.setAdapter(myAdapter);
-        Calendar today = Calendar.getInstance();
-        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        getTodayAppointments((int) (today.getTimeInMillis() / 1000L), myAdapter);
-
-        today_app.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map.Entry<Integer, AppointmentOnDate> item = myAdapter.getItem(position);
-                AppointmentOnDate curr_app = item.getValue();
-
-                ChangeTodayAppointmentFragment chfr = new ChangeTodayAppointmentFragment();
-                Bundle info = new Bundle();
-                info.putBundle("appointment", curr_app.makeBundle());
-                info.putInt("date", (int) (today.getTimeInMillis() / 1000L));
-                int time = item.getKey();
-                info.putInt("time", time);
-
-                chfr.setArguments(info);
-
-                FragmentTransaction ftt = getActivity().getSupportFragmentManager().beginTransaction();
-                ftt.replace(R.id.main, chfr, FULL_SCREEN);
-                ftt.remove(MainFragment.this);
-                getActivity().getSupportFragmentManager().popBackStack();
-                ftt.addToBackStack(null);
-                ftt.commit();
-            }
-        });
 
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +94,8 @@ public class MainFragment extends Fragment {
                 Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
             }
         });
+        Calendar today = Calendar.getInstance();
+        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
         DatabaseReference comment = FirebaseDatabase.getInstance(myUtils.dbPath)
                 .getReference("users").child(currentUser.getUid())
                 .child("appointments_on_dates")
@@ -161,7 +133,38 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        TodayAppointmentAdapter myAdapter = new TodayAppointmentAdapter(getContext(), appointments_on_times);
+        ListView today_app = view.findViewById(R.id.today_list);
+        today_app.setAdapter(myAdapter);
+        Calendar today = Calendar.getInstance();
+        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        getTodayAppointments((int) (today.getTimeInMillis() / 1000L), myAdapter);
+
+        today_app.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map.Entry<Integer, AppointmentOnDate> item = myAdapter.getItem(position);
+                AppointmentOnDate curr_app = item.getValue();
+
+                ChangeTodayAppointmentFragment chfr = new ChangeTodayAppointmentFragment();
+                Bundle info = new Bundle();
+                info.putBundle("appointment", curr_app.makeBundle());
+                info.putInt("date", (int) (today.getTimeInMillis() / 1000L));
+                int time = item.getKey();
+                info.putInt("time", time);
+
+                chfr.setArguments(info);
+
+                FragmentTransaction ftt = getActivity().getSupportFragmentManager().beginTransaction();
+                ftt.replace(R.id.main, chfr, FULL_SCREEN);
+                ftt.remove(MainFragment.this);
+                getActivity().getSupportFragmentManager().popBackStack();
+                ftt.addToBackStack(null);
+                ftt.commit();
+            }
+        });
+        return view;
     }
 
     @Override
@@ -175,13 +178,13 @@ public class MainFragment extends Fragment {
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users" + "/" + currentUser.getUid());
 
-        mDatabase.child("appointments_on_dates").child(String.valueOf(today_date)).addValueEventListener(new ValueEventListener() {
+        mDatabase.child("appointments_on_dates").child(String.valueOf(today_date))
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!appointments_on_times.isEmpty()) {
                     appointments_on_times.clear();
                 }
-                Log.d("MAYTAG", String.valueOf(today_date));
                 for (DataSnapshot time : dataSnapshot.getChildren()) {
                     for (DataSnapshot child_child : time.getChildren()) {
                         AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
@@ -192,8 +195,7 @@ public class MainFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Appointment firstApp = snapshot.getValue(Appointment.class);
-                                Log.d("MAYTAG", firstApp.toString());
-                                if (!firstApp.isDeleted() && !firstApp.isArchive() && !firstApp.isOn_pause()) {
+                                if (!(firstApp.isDeleted() || firstApp.isArchive() || firstApp.isOn_pause())) {
                                     curr_app.setPost_id(child_child.getKey());
                                     appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
                                             (Integer.valueOf(time.getKey()), curr_app));

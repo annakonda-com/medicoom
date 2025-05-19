@@ -116,6 +116,10 @@ public class HistoryCurrApointmentAdapter extends ArrayAdapter<Map.Entry<Integer
                         }
                         description = how_to_get + " " + amount_at_once;
                         desc.setText(description);
+
+                        if (app.isDeleted() || app.isArchive() || app.isOn_pause()){
+                            radio_btn.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override

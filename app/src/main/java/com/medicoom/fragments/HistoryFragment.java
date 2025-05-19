@@ -56,7 +56,7 @@ public class HistoryFragment extends Fragment {
                 String date = dayOfMonth + "-" + (month + 1) + "-" + year;
                 Calendar now = Calendar.getInstance(Locale.getDefault());
                 now.set(Calendar.YEAR, year);
-                now.set(Calendar.MONTH, year);
+                now.set(Calendar.MONTH, month);
                 now.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 now.set(Calendar.HOUR_OF_DAY, 0);
                 now.set(Calendar.MINUTE, 0);

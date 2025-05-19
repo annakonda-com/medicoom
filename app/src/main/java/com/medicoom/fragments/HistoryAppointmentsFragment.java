@@ -5,13 +5,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +37,7 @@ import com.medicoom.utils.myUtils;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class HistoryAppointmentsFragment extends Fragment {
@@ -54,21 +61,64 @@ public class HistoryAppointmentsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HistoryCurrApointmentAdapter myAdapter = new HistoryCurrApointmentAdapter(getContext(), appointments_on_times);
-        ListView today_app = view.findViewById(R.id.that_day_list);
-        today_app.setAdapter(myAdapter);
-        Calendar today = Calendar.getInstance();
-        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        getTodayAppointments((int) (today.getTimeInMillis() / 1000L), myAdapter);
+        Toolbar tlbr = view.findViewById(R.id.my_toolbar);
+        Date dat = new Date(day * 1000L);
+        String date = myUtils.dateFormat.format(dat);
+        tlbr.setTitle(date);
+        tlbr.setNavigationIcon(R.drawable.arrow_back);
+        tlbr.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference comment = FirebaseDatabase.getInstance(myUtils.dbPath)
+                .getReference("users").child(currentUser.getUid())
+                .child("appointments_on_dates")
+                .child(String.valueOf(day)).child("comment");
+        EditText inputComment = view.findViewById(R.id.send_comment);
+        TextInputLayout sendComment = view.findViewById(R.id.send_comment_layout);
+        comment.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    inputComment.setText(snapshot.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        sendComment.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String dayComment = inputComment.getText().toString();
+                inputComment.clearFocus();
+                if (!dayComment.isEmpty()) {
+                    comment.setValue(dayComment);
+                } else {
+                    comment.setValue(null);
+                }
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_appointments, container, false);
+        HistoryCurrApointmentAdapter myAdapter = new HistoryCurrApointmentAdapter(getContext(), appointments_on_times);
+        ListView today_app = view.findViewById(R.id.that_day_list);
+        today_app.setAdapter(myAdapter);
+        getTodayAppointments(day, myAdapter);
+        Log.d("MAYTAG", String.valueOf(day));
 
         return view;
     }
+
     private void getTodayAppointments(int today_date, HistoryCurrApointmentAdapter adapter) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance
@@ -81,10 +131,10 @@ public class HistoryAppointmentsFragment extends Fragment {
                 if (!appointments_on_times.isEmpty()) {
                     appointments_on_times.clear();
                 }
-                Log.d("MAYTAG", String.valueOf(today_date));
                 for (DataSnapshot time : dataSnapshot.getChildren()) {
                     for (DataSnapshot child_child : time.getChildren()) {
                         AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
+                        Log.d("MAYTAG", curr_app.toString());
                         DatabaseReference appoint = FirebaseDatabase.getInstance(myUtils.dbPath)
                                 .getReference("users").child(currentUser.getUid())
                                 .child("appointments").child(curr_app.getAppointment_id());
@@ -93,12 +143,12 @@ public class HistoryAppointmentsFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Appointment firstApp = snapshot.getValue(Appointment.class);
                                 Log.d("MAYTAG", firstApp.toString());
-                                if (!firstApp.isDeleted() && !firstApp.isArchive() && !firstApp.isOn_pause()) {
-                                    curr_app.setPost_id(child_child.getKey());
-                                    appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
-                                            (Integer.valueOf(time.getKey()), curr_app));
-                                    adapter.notifyDataSetChanged();
-                                }
+                                curr_app.setPost_id(child_child.getKey());
+                                appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
+                                        (Integer.valueOf(time.getKey()), curr_app));
+                                adapter.notifyDataSetChanged();
+                                Log.d("MAYTAG", "time.toString()");
+
                             }
 
                             @Override
@@ -108,6 +158,10 @@ public class HistoryAppointmentsFragment extends Fragment {
 
                     }
                 }
+                /*for (Map.Entry<Integer, AppointmentOnDate> apd: appointments_on_times){
+                    Log.d("MAYTAG", String.valueOf(apd.getKey()));
+                    Log.d("MAYTAG", apd.getValue().toString());
+                }*/
             }
 
             @Override

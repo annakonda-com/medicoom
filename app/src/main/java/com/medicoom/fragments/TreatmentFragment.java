@@ -105,28 +105,4 @@ public class TreatmentFragment extends Fragment {
             return inflater.inflate(R.layout.fragment_history_appointments, container, false);
         }
     }
-
-    //На будущее
-    public static class AppointmentCalendarFragment extends Fragment {
-
-
-        public AppointmentCalendarFragment() {
-            // Required empty public constructor
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            if (getArguments() != null) {
-
-            }
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.fragment_appointment_calendar, container, false);
-        }
-    }
 }

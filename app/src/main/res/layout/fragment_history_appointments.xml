@@ -4,11 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TreatmentFragment$HistoryAppointmentsFragment">
+    tools:context=".fragments.HistoryAppointmentsFragment"
+    android:background="@color/md_theme_inverseOnSurface">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_surface"
+            android:layout_gravity="top"
+            tools:title="Магний"
+            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+            app:titleTextColor="@color/md_theme_onSurface" />
 
         <ListView
             android:id="@+id/that_day_list"
@@ -20,7 +32,8 @@
             android:animateLayoutChanges="true"
             android:divider="@null"
             android:dividerHeight="8dp"
-            android:paddingVertical="8dp" />
+            android:paddingVertical="8dp"
+            android:layout_below="@+id/my_toolbar"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/send_comment_layout"
@@ -29,7 +42,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="120dp"
+            android:layout_marginBottom="12dp"
             android:hint="@string/comment_to_day"
             app:endIconDrawable="@drawable/arrow_forward"
             app:endIconMode="custom">
