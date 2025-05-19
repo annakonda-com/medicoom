@@ -181,16 +181,18 @@ public class MainFragment extends Fragment {
                 if (!appointments_on_times.isEmpty()) {
                     appointments_on_times.clear();
                 }
+                Log.d("MAYTAG", String.valueOf(today_date));
                 for (DataSnapshot time : dataSnapshot.getChildren()) {
                     for (DataSnapshot child_child : time.getChildren()) {
                         AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
                         DatabaseReference appoint = FirebaseDatabase.getInstance(myUtils.dbPath)
                                 .getReference("users").child(currentUser.getUid())
                                 .child("appointments").child(curr_app.getAppointment_id());
-                        appoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                        appoint.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Appointment firstApp = snapshot.getValue(Appointment.class);
+                                Log.d("MAYTAG", firstApp.toString());
                                 if (!firstApp.isDeleted() && !firstApp.isArchive() && !firstApp.isOn_pause()) {
                                     curr_app.setPost_id(child_child.getKey());
                                     appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
