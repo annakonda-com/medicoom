@@ -38,7 +38,9 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class HistoryAppointmentsFragment extends Fragment {
     int day;
@@ -125,49 +127,51 @@ public class HistoryAppointmentsFragment extends Fragment {
                         ("https://medicoom-abc-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users" + "/" + currentUser.getUid());
 
-        mDatabase.child("appointments_on_dates").child(String.valueOf(today_date)).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!appointments_on_times.isEmpty()) {
-                    appointments_on_times.clear();
-                }
-                for (DataSnapshot time : dataSnapshot.getChildren()) {
-                    for (DataSnapshot child_child : time.getChildren()) {
-                        AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
-                        Log.d("MAYTAG", curr_app.toString());
-                        DatabaseReference appoint = FirebaseDatabase.getInstance(myUtils.dbPath)
-                                .getReference("users").child(currentUser.getUid())
-                                .child("appointments").child(curr_app.getAppointment_id());
-                        appoint.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Appointment firstApp = snapshot.getValue(Appointment.class);
-                                Log.d("MAYTAG", firstApp.toString());
-                                curr_app.setPost_id(child_child.getKey());
-                                appointments_on_times.add(new AbstractMap.SimpleEntry<Integer, AppointmentOnDate>
-                                        (Integer.valueOf(time.getKey()), curr_app));
-                                adapter.notifyDataSetChanged();
-                                Log.d("MAYTAG", "time.toString()");
+        mDatabase.child("appointments_on_dates").child(String.valueOf(today_date))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        appointments_on_times.clear();
+                        List<CompletableFuture<Void>> futures = new ArrayList<>();
 
+                        for (DataSnapshot time : dataSnapshot.getChildren()) {
+                            for (DataSnapshot child_child : time.getChildren()) {
+                                AppointmentOnDate curr_app = child_child.getValue(AppointmentOnDate.class);
+                                DatabaseReference appoint = FirebaseDatabase.getInstance(myUtils.dbPath)
+                                        .getReference("users").child(currentUser.getUid())
+                                        .child("appointments").child(curr_app.getAppointment_id());
+
+                                CompletableFuture<Void> future = new CompletableFuture<>();
+                                futures.add(future);
+
+                                appoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Appointment firstApp = snapshot.getValue(Appointment.class);
+                                        if (!(firstApp.isDeleted() || firstApp.isArchive() || firstApp.isOn_pause())) {
+                                            curr_app.setPost_id(child_child.getKey());
+                                            appointments_on_times.add(new AbstractMap.SimpleEntry<>(
+                                                    Integer.valueOf(time.getKey()), curr_app));
+                                        }
+                                        future.complete(null);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        future.completeExceptionally(error.toException());
+                                    }
+                                });
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-
+                        }
+                        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                                .thenRun(() -> adapter.notifyDataSetChanged());
                     }
-                }
-                /*for (Map.Entry<Integer, AppointmentOnDate> apd: appointments_on_times){
-                    Log.d("MAYTAG", String.valueOf(apd.getKey()));
-                    Log.d("MAYTAG", apd.getValue().toString());
-                }*/
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
-            }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
+                    }
+                });
+
     }
 }

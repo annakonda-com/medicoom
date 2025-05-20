@@ -2,14 +2,14 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="100dp"
     android:layout_alignParentBottom="true">
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomBar"
         style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/md_theme_surfaceContainerLowest"
         app:contentInsetStart="0dp"
@@ -20,14 +20,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingStart="8dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:padding="8dp">
+                android:layout_centerVertical="true">
 
                 <LinearLayout
                     android:id="@+id/menuToday"
@@ -68,7 +69,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:padding="8dp">
+                android:paddingEnd="8dp"
+                android:gravity="center">
 
                 <LinearLayout
                     android:id="@+id/menuTreatment"
