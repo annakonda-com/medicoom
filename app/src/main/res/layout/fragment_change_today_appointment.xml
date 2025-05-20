@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.ChangeTodayAppointmentFragment"
-    android:background="@color/md_theme_inverseOnSurface">
+    android:background="@color/md_theme_inverseOnSurface"
+    tools:context=".fragments.ChangeTodayAppointmentFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/md_theme_surface"
             android:layout_gravity="top"
-            tools:title="Магний"
+            android:background="@color/md_theme_surface"
             app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-            app:titleTextColor="@color/md_theme_onSurface" />
-        <include layout="@layout/time_input"
-            android:id="@+id/got_time" />
+            app:titleTextColor="@color/md_theme_onSurface"
+            tools:title="Магний" />
+
+        <include
+            android:id="@+id/got_time"
+            layout="@layout/time_input" />
+        <include
+            android:id="@+id/fake_comment"
+            layout="@layout/fake_input" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/comment_layout"
@@ -36,20 +42,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <CheckBox
+            android:id="@+id/is_got"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/is_got"
             android:layout_marginStart="8dp"
-            android:id="@+id/is_got"/>
+            android:text="@string/is_got" />
+
+        <TextView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"/>
 
     </LinearLayout>
+
     <Button
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="50dp"
         android:width="200dp"
-        android:id="@+id/save"/>
+        android:text="@string/save" />
 </FrameLayout>

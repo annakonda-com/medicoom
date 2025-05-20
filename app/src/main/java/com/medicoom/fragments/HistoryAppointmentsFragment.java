@@ -45,6 +45,7 @@ import java.util.concurrent.CompletableFuture;
 public class HistoryAppointmentsFragment extends Fragment {
     int day;
     ArrayList<Map.Entry<Integer, AppointmentOnDate>> appointments_on_times = new ArrayList<>();
+    final String FULL_SCREEN = "full_screen";
 
     DatabaseReference baseReferense = FirebaseDatabase.getInstance(myUtils.dbPath).getReference("users");
 
@@ -116,7 +117,30 @@ public class HistoryAppointmentsFragment extends Fragment {
         ListView today_app = view.findViewById(R.id.that_day_list);
         today_app.setAdapter(myAdapter);
         getTodayAppointments(day, myAdapter);
-        Log.d("MAYTAG", String.valueOf(day));
+        today_app.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map.Entry<Integer, AppointmentOnDate> item = myAdapter.getItem(position);
+                AppointmentOnDate curr_app = item.getValue();
+
+                ChangeTodayAppointmentFragment chfr = new ChangeTodayAppointmentFragment();
+                Bundle info = new Bundle();
+                info.putBundle("appointment", curr_app.makeBundle());
+                info.putInt("date", (day));
+                int time = item.getKey();
+                info.putInt("time", time);
+                info.putString("where", "history");
+
+                chfr.setArguments(info);
+
+                FragmentTransaction ftt = getActivity().getSupportFragmentManager().beginTransaction();
+                ftt.replace(R.id.main, chfr, FULL_SCREEN);
+                //ftt.remove(MainFragment.this);
+                getActivity().getSupportFragmentManager().popBackStack();
+                ftt.addToBackStack(null);
+                ftt.commit();
+            }
+        });
 
         return view;
     }

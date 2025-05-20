@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class HistoryCurrApointmentAdapter extends ArrayAdapter<Map.Entry<Integer, AppointmentOnDate>> {
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -117,7 +118,7 @@ public class HistoryCurrApointmentAdapter extends ArrayAdapter<Map.Entry<Integer
                         description = how_to_get + " " + amount_at_once;
                         desc.setText(description);
 
-                        if (app.isDeleted() || app.isArchive() || app.isOn_pause()){
+                        if (app.isDeleted() || app.isArchive() || app.isOn_pause()) {
                             radio_btn.setVisibility(View.GONE);
                         }
                     }

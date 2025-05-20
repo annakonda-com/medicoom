@@ -45,6 +45,7 @@ public class ChangeTodayAppointmentFragment extends Fragment {
     int time = -1;
     int givenTime;
     int day;
+    String where;
 
     public ChangeTodayAppointmentFragment() {
         // Required empty public constructor
@@ -58,6 +59,7 @@ public class ChangeTodayAppointmentFragment extends Fragment {
             givenTime = getArguments().getInt("time");
 
             day = getArguments().getInt("date");
+            where = getArguments().getString("where");
         }
     }
 
@@ -92,55 +94,77 @@ public class ChangeTodayAppointmentFragment extends Fragment {
         if (appointment.getGot_time() != -1) {
             timeView.setText(myUtils.secToTime(appointment.getGot_time()));
         }
-        timeInclude.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTimeDialog(timeView);
-            }
-        });
-
-
-        CheckBox isGot = view.findViewById(R.id.is_got);
-        isGot.setChecked(appointment.isIs_got());
-
+        if (where == null) {
+            timeInclude.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showTimeDialog(timeView);
+                }
+            });
+        }
+        RelativeLayout commInclude = view.findViewById(R.id.fake_comment);
+        TextView commView = timeInclude.findViewById(R.id.input_text);
+        EditText comm = view.findViewById(R.id.comment);
+        if (where == null) {
+            commInclude.setVisibility(View.GONE);
+        } else {
+            comm.setVisibility(View.GONE);
+        }
         if (appointment.getComment() != null && !appointment.getComment().isEmpty()) {
-            EditText comm = view.findViewById(R.id.comment);
-            comm.setText(appointment.getComment());
+            if (where == null) {
+                comm.setText(appointment.getComment());
+            } else {
+                commView.setText(appointment.getComment());
+            }
         }
 
-        view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String comment = ((EditText) view.findViewById(R.id.comment)).getText().toString();
-                AppointmentOnDate newApp = new AppointmentOnDate(appointment);
-                if (time != -1) {
-                    newApp.setGot_time(time);
-                }
-                if (!comment.isEmpty()){
-                    newApp.setComment(comment);
-                }
+        CheckBox isGot = view.findViewById(R.id.is_got);
+        if (where == null) {
+            isGot.setChecked(appointment.isIs_got());
 
-                if (isGot.isChecked()){
-                    if (newApp.isIs_got() != isGot.isChecked()){
-                        Context context = getContext();
-                        myUtils.change_num_of_tablets(isGot.isChecked(), curr_usr, newApp, context);
-                        newApp.setIs_got(true);
+            view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String comment = ((EditText) view.findViewById(R.id.comment)).getText().toString();
+                    AppointmentOnDate newApp = new AppointmentOnDate(appointment);
+                    if (time != -1) {
+                        newApp.setGot_time(time);
                     }
-                } else {
-                    if (newApp.isIs_got() != isGot.isChecked()){
-                        Context context = getContext();
-                        myUtils.change_num_of_tablets(isGot.isChecked(), curr_usr, newApp, context);
-                        newApp.setIs_got(false);
+                    if (!comment.isEmpty()) {
+                        newApp.setComment(comment);
                     }
+
+                    if (isGot.isChecked()) {
+                        if (newApp.isIs_got() != isGot.isChecked()) {
+                            Context context = getContext();
+                            myUtils.change_num_of_tablets(isGot.isChecked(), curr_usr, newApp, context);
+                            newApp.setIs_got(true);
+                        }
+                    } else {
+                        if (newApp.isIs_got() != isGot.isChecked()) {
+                            Context context = getContext();
+                            myUtils.change_num_of_tablets(isGot.isChecked(), curr_usr, newApp, context);
+                            newApp.setIs_got(false);
+                        }
+                    }
+                    newApp.setPost_id(null);
+                    DatabaseReference appUnit = FirebaseDatabase.getInstance(myUtils.dbPath).getReference("users")
+                            .child(curr_usr.getUid()).child("appointments_on_dates")
+                            .child(String.valueOf(day)).child(String.valueOf(givenTime)).child(appointment.getPost_id());
+                    appUnit.setValue(newApp);
+                    getActivity().getSupportFragmentManager().popBackStack();
                 }
-                newApp.setPost_id(null);
-                DatabaseReference appUnit = FirebaseDatabase.getInstance(myUtils.dbPath).getReference("users")
-                        .child(curr_usr.getUid()).child("appointments_on_dates")
-                        .child(String.valueOf(day)).child(String.valueOf(givenTime)).child(appointment.getPost_id());
-                appUnit.setValue(newApp);
-                getActivity().getSupportFragmentManager().popBackStack();
+            });
+        } else {
+            isGot.setVisibility(View.GONE);
+            TextView warning = view.findViewById(R.id.warning);
+            if (appointment.isIs_got()) {
+                warning.setText("Лекарство было принято");
+            } else {
+                warning.setText("Лекарство не было принято");
             }
-        });
+            view.findViewById(R.id.save).setVisibility(View.GONE);
+        }
     }
 
     @Override
